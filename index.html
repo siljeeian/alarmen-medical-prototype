@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Alarmen — Medical Case</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&display=swap');
+
+  :root {
+    --navy: #091033;
+    --navy-border: #262C52;
+    --bg-blue: #EBF0FA;
+    --border-blue: #D6DDEE;
+    --border-blue-2: #BAC3D9;
+    --white: #FFFFFF;
+    --purple: #6325E7;
+    --yellow-bg: #FFEEBD;
+    --pink-highlight: #FFE2E2;
+    --green-bg: #D4F7E6;
+    --green-text: #00593E;
+    --badge-gray: #61698F;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    font-family: 'Manrope', system-ui, -apple-system, sans-serif;
+    background: var(--bg-blue);
+    color: var(--navy);
+  }
+
+  /* ---------- NAV ---------- */
+  .header-bar {
+    height: 56px;
+    background: var(--navy);
+    border-bottom: 1px solid var(--navy-border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+  }
+  .logo-area { display: flex; align-items: center; gap: 12px; }
+  .logo-dot {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700; color: var(--navy); font-size: 14px;
+  }
+  .app-title { color: var(--white); font-size: 16px; font-weight: 500; }
+  .profile-area { display: flex; align-items: center; gap: 8px; }
+  .avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: var(--purple);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--white); font-size: 14px; font-weight: 500;
+  }
+  .profile-name { color: var(--white); font-size: 16px; font-weight: 500; }
+  .chevron-white { color: var(--white); font-size: 12px; }
+
+  .nav-bar {
+    height: 56px;
+    background: var(--bg-blue);
+    border-bottom: 1px solid var(--border-blue);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+  }
+  .nav-item {
+    padding: 24px;
+    font-size: 16px;
+    font-weight: 400;
+    color: var(--navy);
+    cursor: pointer;
+  }
+  .nav-item:hover { text-decoration: underline; }
+
+  /* ---------- MAIN CONTENT ---------- */
+  .content-wrap {
+    background: var(--white);
+    max-width: 1700px;
+    margin: 0 auto;
+    padding: 24px 110px;
+  }
+
+  .back-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: var(--navy);
+    border: none;
+    background: none;
+    padding: 5px 0;
+    border-bottom: 1.5px solid var(--navy);
+    cursor: pointer;
+    margin-bottom: 20px;
+  }
+
+  .patient-header { margin-bottom: 24px; }
+  .patient-name {
+    font-size: 32px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 0 4px 0;
+  }
+  .case-number {
+    font-size: 20px;
+    font-weight: 400;
+    color: var(--navy);
+    margin: 0;
+  }
+
+  .tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border-blue-2);
+    margin-bottom: 24px;
+  }
+  .tab {
+    padding: 16px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    background: var(--border-blue);
+    border: 1px solid var(--border-blue-2);
+    border-bottom: none;
+    cursor: pointer;
+    color: var(--navy);
+  }
+  .tab.active {
+    background: var(--white);
+    border-bottom: 2px solid var(--navy);
+    font-weight: 700;
+  }
+
+  .main-grid {
+    display: flex;
+    gap: 24px;
+    align-items: flex-start;
+  }
+  .col-left { width: 440px; flex-shrink: 0; display: flex; flex-direction: column; gap: 24px; }
+  .col-right { flex: 1; display: flex; flex-direction: column; gap: 24px; }
+  .col-right-top { display: flex; gap: 24px; }
+
+  /* ---------- CARDS ---------- */
+  .card {
+    border-radius: 8px;
+    padding: 24px;
+  }
+  .card.blue { background: var(--bg-blue); }
+  .card.white { background: var(--white); border: 1px solid var(--border-blue-2); }
+
+  .card-title-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+  .card-title {
+    font-size: 20px;
+    font-weight: 400;
+    margin: 0;
+  }
+  .edit-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: var(--navy);
+    border: none;
+    background: none;
+    border-bottom: 1.5px solid var(--navy);
+    padding-bottom: 2px;
+    cursor: pointer;
+  }
+
+  .field-row {
+    display: flex;
+    gap: 16px;
+    padding: 4px 0;
+  }
+  .field-label {
+    font-size: 14px;
+    font-weight: 500;
+    width: 175px;
+    flex-shrink: 0;
+  }
+  .field-value {
+    font-size: 14px;
+    font-weight: 400;
+    flex: 1;
+  }
+  .field-group { display: flex; flex-direction: column; gap: 4px; margin-bottom: 8px; }
+
+  .divider {
+    height: 1px;
+    background: rgba(9,16,51,0.15);
+    margin: 8px 0;
+    border: none;
+  }
+
+  .view-history {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    color: var(--navy);
+    background: none;
+    border: none;
+    border-bottom: 1.5px solid var(--navy);
+    padding-bottom: 2px;
+    cursor: pointer;
+    margin-top: 8px;
+  }
+
+  .subsection-title {
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0 0 8px 0;
+  }
+
+  .action-btn {
+    width: 440px;
+    height: 56px;
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    border-radius: 4px;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 13px 16px;
+    cursor: pointer;
+  }
+
+  .dropdown-badge {
+    width: 100%;
+    background: var(--yellow-bg);
+    border: 2px solid var(--border-blue-2);
+    border-radius: 4px;
+    padding: 12px 16px;
+    font-size: 16px;
+    font-weight: 400;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+  }
+
+  .cd-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    background: var(--badge-gray);
+    color: var(--white);
+    border-radius: 999px;
+    padding: 2px 8px;
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .highlight-row { background: var(--pink-highlight); border-radius: 4px; margin: 0 -8px; padding: 8px !important; }
+  .risk-row { display: flex; justify-content: space-between; padding: 8px; gap: 16px; }
+  .risk-row .field-label { width: auto; flex: 1; }
+  .risk-row .field-value { flex: 0 0 auto; text-align: right; }
+
+  /* ---------- TABLE ---------- */
+  .table-card { background: var(--white); border: 1px solid var(--border-blue-2); border-radius: 8px; padding: 24px; }
+  table { width: 100%; border-collapse: collapse; font-size: 14px; }
+  th {
+    background: var(--bg-blue);
+    border: 1px solid var(--border-blue);
+    text-align: left;
+    padding: 10px 16px;
+    font-weight: 500;
+    font-size: 14px;
+  }
+  td {
+    border: 1px solid var(--border-blue);
+    padding: 10px 16px;
+    font-size: 14px;
+  }
+  .m-badge {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--purple);
+    color: var(--white);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 10px; font-weight: 400;
+  }
+  .initials-pill {
+    display: inline-block;
+    background: var(--white);
+    border: 1px solid var(--border-blue-2);
+    border-radius: 999px;
+    padding: 4px 10px;
+    font-size: 14px;
+  }
+  .expand-chevron { cursor: pointer; color: var(--navy); }
+
+  /* ---------- ACCORDIONS ---------- */
+  .accordion {
+    background: var(--bg-blue);
+    border-radius: 8px;
+    padding: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 400;
+  }
+
+  .icon { width: 16px; height: 16px; display: inline-block; }
+</style>
+</head>
+<body>
+
+  <div class="header-bar">
+    <div class="logo-area">
+      <div class="logo-dot">G</div>
+      <span class="app-title">Alarmen</span>
+    </div>
+    <div class="profile-area">
+      <div class="avatar">S</div>
+      <span class="profile-name">Silje</span>
+      <span class="chevron-white">▾</span>
+    </div>
+  </div>
+
+  <div class="nav-bar">
+    <div class="nav-item">My cases</div>
+    <div class="nav-item">My tasks</div>
+    <div class="nav-item">Team dashboard</div>
+    <div class="nav-item">Incoming e-mail</div>
+  </div>
+
+  <div class="content-wrap">
+
+    <button class="back-btn">← Back</button>
+
+    <div class="patient-header">
+      <h1 class="patient-name">Name Nameson 🇳🇴 📌</h1>
+      <p class="case-number">Case number: 123456789</p>
+    </div>
+
+    <div class="tabs">
+      <div class="tab">Tab</div>
+      <div class="tab">Tab</div>
+      <div class="tab active">Medical</div>
+      <div class="tab">Tab</div>
+      <div class="tab">Tab</div>
+      <div class="tab">Tab</div>
+      <div class="tab">Tab</div>
+      <div class="tab">Tab</div>
+    </div>
+
+    <div class="main-grid">
+
+      <!-- LEFT COLUMN -->
+      <div class="col-left">
+
+        <div class="card blue">
+          <div class="card-title-row">
+            <h3 class="card-title">Hospital</h3>
+            <button class="edit-link">✎ Edit</button>
+          </div>
+          <div class="field-group">
+            <div class="field-row"><div class="field-label">Hospital</div><div class="field-value">Bumrungrad hospital, Bankkok, Thailand</div></div>
+            <div class="field-row"><div class="field-label">Phone number</div><div class="field-value">+ 66 2 849 0383</div></div>
+            <div class="field-row"><div class="field-label">Location</div><div class="field-value">33 Soi Sukumvit, 3, Bankok, Thailand</div></div>
+          </div>
+          <hr class="divider">
+          <div class="field-group">
+            <div class="field-row"><div class="field-label">Department</div><div class="field-value">Neurology</div></div>
+            <div class="field-row"><div class="field-label">Treating doctor</div><div class="field-value">Name Nameson</div></div>
+            <div class="field-row"><div class="field-label">Number of treating doctor</div><div class="field-value">+ 66 3 749 0383</div></div>
+          </div>
+        </div>
+
+        <div class="card blue">
+          <div class="card-title-row">
+            <h3 class="card-title">Treatment</h3>
+            <button class="edit-link">✎ Edit</button>
+          </div>
+          <div class="field-group">
+            <div class="field-row"><div class="field-label">Type of patient</div><div class="field-value">In-patient</div></div>
+            <div class="field-row"><div class="field-label">Date of admission</div><div class="field-value">2026-06-28</div></div>
+            <div class="field-row"><div class="field-label">Date of discharge</div><div class="field-value">-</div></div>
+            <div class="field-row"><div class="field-label">Description of incident</div><div class="field-value">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div></div>
+          </div>
+          <button class="view-history">⌄ View history</button>
+        </div>
+
+        <div class="card blue">
+          <div class="card-title-row">
+            <h3 class="card-title">Doctors</h3>
+            <button class="edit-link">✎ Edit</button>
+          </div>
+          <p class="subsection-title">Contact Doctor 1</p>
+          <div class="field-group">
+            <div class="field-row"><div class="field-label">Name &amp; Type</div><div class="field-value">Jason Peterson - Cardiolagist</div></div>
+            <div class="field-row"><div class="field-label">Involvement in the case</div><div class="field-value">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div></div>
+          </div>
+        </div>
+
+        <button class="action-btn">Create Transport Assessment <span>+</span></button>
+        <button class="action-btn">Create Fit For Flight <span>+</span></button>
+
+      </div>
+
+      <!-- RIGHT COLUMN -->
+      <div class="col-right">
+
+        <div class="col-right-top">
+          <div style="flex-shrink:0; width:440px; display:flex; flex-direction:column; gap:16px;">
+            <button class="dropdown-badge">Ordinary illness <span>⌄</span></button>
+
+            <div class="card white">
+              <div class="card-title-row">
+                <h3 class="card-title">Diagnose</h3>
+                <span class="cd-badge">🔒 CD Only</span>
+              </div>
+
+              <p class="subsection-title">Diagnose 1</p>
+              <div class="field-group">
+                <div class="field-row"><div class="field-label" style="width:50px;">ICD-10</div><div class="field-value">E12.5</div></div>
+                <div class="field-row"><div class="field-label" style="width:50px;">English</div><div class="field-value">Malnutrition-related diabetes mellitus with peripheral circulatory disorder</div></div>
+              </div>
+
+              <p class="subsection-title" style="margin-top:12px;">Diagnose 2</p>
+              <div class="field-group">
+                <div class="field-row"><div class="field-label" style="width:50px;">ICD-10</div><div class="field-value">T67.0</div></div>
+                <div class="field-row"><div class="field-label" style="width:50px;">English</div><div class="field-value">Heatstroke and sunstroke</div></div>
+              </div>
+
+              <p class="subsection-title" style="margin-top:12px;">Diagnose 3</p>
+              <div class="field-group">
+                <div class="field-row"><div class="field-label" style="width:50px;">ICD-10</div><div class="field-value">T67.0</div></div>
+                <div class="field-row"><div class="field-label" style="width:50px;">English</div><div class="field-value">Heatstroke and sunstroke</div></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card white" style="flex:1;">
+            <div class="card-title-row">
+              <h3 class="card-title">Risk Assesment</h3>
+              <span class="cd-badge">🔒 CD Only</span>
+            </div>
+            <div class="risk-row"><div class="field-label">Urgent</div><div class="field-value">No</div></div>
+            <div class="risk-row highlight-row"><div class="field-label">Serious</div><div class="field-value">Yes</div></div>
+            <div class="risk-row"><div class="field-label">Life threatning</div><div class="field-value">No</div></div>
+            <div class="risk-row"><div class="field-label">Possible pre-existing medical condition (DK &amp; SE cases)</div><div class="field-value">No</div></div>
+            <div class="risk-row"><div class="field-label">Possible FBB (NO cases)</div><div class="field-value">No</div></div>
+            <div class="risk-row highlight-row"><div class="field-label">Possible overtreatment</div><div class="field-value">Yes</div></div>
+            <div class="risk-row"><div class="field-label">Possible treatment failure</div><div class="field-value">No</div></div>
+            <div class="risk-row"><div class="field-label">Need for urgent evacuation</div><div class="field-value">No</div></div>
+          </div>
+        </div>
+
+        <div class="table-card">
+          <h3 class="card-title" style="margin-bottom:16px;">Interventions &amp; Transport Assessment</h3>
+          <table>
+            <thead>
+              <tr>
+                <th style="width:48px;"></th>
+                <th>Order ⇅</th>
+                <th>Date ⇅</th>
+                <th>Time</th>
+                <th>Intervention</th>
+                <th>Initials ⇅</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td class="expand-chevron">⌄</td>
+                <td><span class="m-badge">M5</span></td>
+                <td>2026-08-18</td>
+                <td>14:35</td>
+                <td>Intervention based on Medical Report</td>
+                <td><span class="initials-pill">NKV</span></td>
+              </tr>
+              <tr>
+                <td class="expand-chevron">⌄</td>
+                <td><span class="m-badge">M4</span></td>
+                <td>2026-08-17</td>
+                <td>09:20</td>
+                <td>Intervention based on TP consultation</td>
+                <td><span class="initials-pill">JHN</span></td>
+              </tr>
+              <tr>
+                <td class="expand-chevron">⌄</td>
+                <td><span class="m-badge">M3</span></td>
+                <td>2026-08-16</td>
+                <td>18:45</td>
+                <td>CLI informed and agrees to Medical transport plan</td>
+                <td><span class="initials-pill">NKV</span></td>
+              </tr>
+              <tr>
+                <td class="expand-chevron">⌄</td>
+                <td><span class="m-badge">M2</span></td>
+                <td>2026-08-15</td>
+                <td>07:10</td>
+                <td>Other</td>
+                <td><span class="initials-pill">SRN</span></td>
+              </tr>
+              <tr>
+                <td class="expand-chevron">⌄</td>
+                <td><span class="m-badge">M1</span></td>
+                <td>2026-08-14</td>
+                <td>22:55</td>
+                <td>Intervention based on Medical Report</td>
+                <td><span class="initials-pill">NKV</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="accordion">Screening Questions <span>⌄</span></div>
+        <div class="accordion">Medical Documents <span>⌄</span></div>
+
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>
