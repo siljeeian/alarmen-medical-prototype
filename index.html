@@ -5,533 +5,703 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Alarmen — Medical Case</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700&display=swap');
+  /* ============ Real Gjensidige Builders fonts (public CDN) ============ */
+  @font-face {
+    font-family: 'GjensidigeDisplay';
+    font-style: normal;
+    font-weight: 400;
+    src: url('https://cdn.gjensidige.no/builders/core/fonts/GjensidigeDisplay-Medium.woff2') format('woff2');
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'GjensidigeSans';
+    font-style: normal;
+    font-weight: 400;
+    src: url('https://cdn.gjensidige.no/builders/core/fonts/GjensidigeSans-Regular.woff2') format('woff2');
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'GjensidigeSans';
+    font-style: normal;
+    font-weight: 500;
+    src: url('https://cdn.gjensidige.no/builders/core/fonts/GjensidigeSans-Medium.woff2') format('woff2');
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'GjensidigeSans';
+    font-style: normal;
+    font-weight: 700;
+    src: url('https://cdn.gjensidige.no/builders/core/fonts/GjensidigeSans-Bold.woff2') format('woff2');
+    font-display: swap;
+  }
 
+  /* ============ Builders Design System tokens (resolved to px, base 16px root) ============ */
   :root {
-    --navy: #091033;
-    --navy-border: #262C52;
-    --bg-blue: #EBF0FA;
-    --border-blue: #D6DDEE;
-    --border-blue-2: #BAC3D9;
-    --white: #FFFFFF;
-    --purple: #6325E7;
-    --yellow-bg: #FFEEBD;
-    --pink-highlight: #FFE2E2;
-    --green-bg: #D4F7E6;
-    --green-text: #00593E;
-    --badge-gray: #61698F;
+    /* Colors — raw palette */
+    --builders-color-white: #FFFFFF;
+    --builders-color-blue-100: #EBF0FA;
+    --builders-color-blue-200: #D6DDEE;
+    --builders-color-blue-300: #BAC3D9;
+    --builders-color-blue-500: #61698F;
+    --builders-color-blue-600: #262C52;
+    --builders-color-blue-700: #090C33;
+    --builders-color-purple-700: #6325E7;
+    --builders-color-yellow-100: #F9FFD7;
+    --builders-color-success-100: #D4F7E6;
+    --builders-color-success-300: #00593E;
+    --builders-color-warn-100: #FFEEBD;
+    --builders-color-error-100: #FFE2E2;
+    --builders-color-error-300: #8C0008;
+
+    /* ds-* semantic tokens (as used in the Figma Make "Medical Dashboard" prototype) */
+    --ds-color-canvas: var(--builders-color-white);
+    --ds-color-surface: var(--builders-color-white);
+    --ds-color-surface-blue: var(--builders-color-blue-100);
+    --ds-color-tab: var(--builders-color-blue-200);
+    --ds-color-border: var(--builders-color-blue-300);
+    --ds-color-border-soft: var(--builders-color-blue-200);
+    --ds-color-ink: var(--builders-color-blue-700);
+    --ds-color-ink-muted: var(--builders-color-blue-500);
+    --ds-color-header-border: var(--builders-color-blue-600);
+    --ds-color-avatar: var(--builders-color-purple-700);
+    --ds-color-warning: var(--builders-color-warn-100);
+    --ds-color-danger-soft: var(--builders-color-error-100);
+    --ds-color-required: var(--builders-color-error-300);
+    --ds-color-classification-ordinary: color-mix(in srgb, var(--builders-color-warn-100) 60%, white);
+
+    --ds-font-display: 'GjensidigeDisplay', sans-serif;
+    --ds-font-regular: 'GjensidigeSans', sans-serif;
+    --ds-font-medium: 'GjensidigeSans', sans-serif;
+    --ds-font-bold: 'GjensidigeSans', sans-serif;
+
+    /* Spacing scale (unit-10 = 8px base) */
+    --ds-space-1: 2px;
+    --ds-space-2: 4px;
+    --ds-space-3: 8px;
+    --ds-space-4: 12px;
+    --ds-space-5: 16px;
+    --ds-space-6: 20px;
+    --ds-space-7: 24px;
+    --ds-space-8: 32px;
+    --ds-space-10: 40px;
+    --ds-space-12: 48px;
+    --ds-space-14: 56px;
+    --ds-space-20: 80px;
+
+    --ds-header-row: var(--ds-space-14);     /* 56px */
+    --ds-content-max: 1400px;
+    --ds-left-column: 440px;
+    --ds-right-column: 920px;
+    --ds-main-gap: 40px;
+
+    --ds-border-thin: 1px;
+    --ds-radius-sm: 4px;
+    --ds-radius-md: 8px;
+    --ds-radius-round: 999px;
+
+    --ds-type-xs: 14px;
+    --ds-type-sm: 16px;
+    --ds-type-md: 20px;
+    --ds-type-lg: 24px;
+    --ds-type-page: 32px;
+    --ds-type-status: 10px;
+
+    --ds-leading-body: 1.5;
+    --ds-leading-display: 1.2;
+    --ds-leading-heading: 1.3;
+    --ds-leading-table: 20px;
+
+    --ds-table-heading: var(--ds-space-10);      /* 40px */
+    --ds-table-row-default: 48px;
   }
 
   * { box-sizing: border-box; }
-
+  html, body { margin: 0; padding: 0; }
   body {
-    margin: 0;
-    font-family: 'Manrope', system-ui, -apple-system, sans-serif;
-    background: var(--bg-blue);
-    color: var(--navy);
+    font-family: var(--ds-font-regular);
+    background: var(--ds-color-canvas);
+    color: var(--ds-color-ink);
   }
+  button { font: inherit; color: inherit; cursor: pointer; }
 
-  /* ---------- NAV ---------- */
-  .header-bar {
-    height: 56px;
-    background: var(--navy);
-    border-bottom: 1px solid var(--navy-border);
-    display: flex;
+  /* ============ App shell ============ */
+  .app-shell { background: var(--ds-color-canvas); min-height: 100dvh; }
+
+  .top-bar {
+    height: var(--ds-header-row);
     align-items: center;
+    display: flex;
     justify-content: space-between;
-    padding: 0 24px;
+    color: var(--ds-color-surface);
+    background: var(--ds-color-ink);
+    border-bottom: var(--ds-border-thin) solid var(--ds-color-header-border);
+    padding-inline: var(--ds-space-7);
   }
-  .logo-area { display: flex; align-items: center; gap: 12px; }
-  .logo-dot {
-    width: 32px; height: 32px; border-radius: 50%;
-    background: var(--white);
-    display: flex; align-items: center; justify-content: center;
-    font-weight: 700; color: var(--navy); font-size: 14px;
+  .brand { display: flex; align-items: center; gap: var(--ds-space-4); }
+  .brand-mark {
+    width: 32px; height: 32px; border-radius: var(--ds-radius-round);
+    background: var(--ds-color-surface); color: var(--ds-color-ink);
+    display: grid; place-items: center; font-family: var(--ds-font-bold); font-size: var(--ds-type-xs);
   }
-  .app-title { color: var(--white); font-size: 16px; font-weight: 500; }
-  .profile-area { display: flex; align-items: center; gap: 8px; }
+  .app-name { font-family: var(--ds-font-medium); font-size: var(--ds-type-sm); }
+  .profile { display: flex; align-items: center; gap: var(--ds-space-3); }
   .avatar {
-    width: 32px; height: 32px; border-radius: 50%;
-    background: var(--purple);
-    display: flex; align-items: center; justify-content: center;
-    color: var(--white); font-size: 14px; font-weight: 500;
+    width: 32px; height: 32px; border-radius: var(--ds-radius-round);
+    background: var(--ds-color-avatar); color: var(--ds-color-surface);
+    display: grid; place-items: center; font-family: var(--ds-font-medium); font-size: var(--ds-type-xs);
   }
-  .profile-name { color: var(--white); font-size: 16px; font-weight: 500; }
-  .chevron-white { color: var(--white); font-size: 12px; }
+  .profile-name { color: var(--ds-color-surface); font-size: var(--ds-type-sm); font-family: var(--ds-font-medium); }
 
-  .nav-bar {
-    height: 56px;
-    background: var(--bg-blue);
-    border-bottom: 1px solid var(--border-blue);
-    display: flex;
+  .navigation {
+    height: var(--ds-header-row);
     align-items: center;
-    padding: 0 20px;
+    display: flex;
+    padding-inline: var(--ds-space-7);
+    background: var(--ds-color-surface-blue);
+    border-bottom: var(--ds-border-thin) solid var(--ds-color-border-soft);
+    overflow-x: auto;
+    gap: 0;
   }
-  .nav-item {
-    padding: 24px;
-    font-size: 16px;
+  .navigation__item {
+    padding: var(--ds-space-7);
+    font-size: var(--ds-type-sm);
+    font-family: var(--ds-font-regular);
+    white-space: nowrap;
+  }
+
+  /* ============ Case header ============ */
+  .case-header {
+    background: var(--ds-color-surface-blue);
+    border-bottom: var(--ds-border-thin) solid var(--ds-color-border-soft);
+  }
+  .case-header__inner {
+    width: min(var(--ds-content-max), calc(100% - var(--ds-space-12)));
+    padding-top: var(--ds-space-7);
+    padding-bottom: var(--ds-space-7);
+    margin-inline: auto;
+  }
+  .case-title { gap: var(--ds-space-2); margin-top: var(--ds-space-5); flex-direction: column; display: flex; }
+  .case-title__line { align-items: center; gap: var(--ds-space-5); display: flex; }
+  .page-heading {
+    font-family: var(--ds-font-display);
     font-weight: 400;
-    color: var(--navy);
-    cursor: pointer;
+    font-size: var(--ds-type-page);
+    line-height: var(--ds-leading-display);
+    margin: 0;
+    color: var(--ds-color-ink);
   }
-  .nav-item:hover { text-decoration: underline; }
+  .case-number { font-size: var(--ds-type-md); font-family: var(--ds-font-regular); margin: 0; color: var(--ds-color-ink); }
 
-  /* ---------- MAIN CONTENT ---------- */
-  .content-wrap {
-    background: var(--white);
-    max-width: 1700px;
-    margin: 0 auto;
-    padding: 24px 110px;
-  }
-
-  .back-btn {
+  .back-link {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    font-size: 16px;
-    font-weight: 500;
-    letter-spacing: 1px;
-    color: var(--navy);
+    gap: var(--ds-space-2);
+    font-family: var(--ds-font-medium);
+    font-size: var(--ds-type-sm);
+    letter-spacing: var(--ds-space-1);
     border: none;
     background: none;
-    padding: 5px 0;
-    border-bottom: 1.5px solid var(--navy);
-    cursor: pointer;
-    margin-bottom: 20px;
+    border-bottom: 1.5px solid var(--ds-color-ink);
+    padding-bottom: 2px;
+    color: var(--ds-color-ink);
   }
 
-  .patient-header { margin-bottom: 24px; }
-  .patient-name {
-    font-size: 32px;
-    font-weight: 700;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin: 0 0 4px 0;
-  }
-  .case-number {
-    font-size: 20px;
-    font-weight: 400;
-    color: var(--navy);
-    margin: 0;
-  }
-
-  .tabs {
-    display: flex;
-    border-bottom: 1px solid var(--border-blue-2);
-    margin-bottom: 24px;
-  }
+  .tabs { margin-top: var(--ds-space-5); display: flex; overflow-x: auto; }
   .tab {
-    padding: 16px 24px;
-    font-size: 16px;
-    font-weight: 500;
-    background: var(--border-blue);
-    border: 1px solid var(--border-blue-2);
+    padding: var(--ds-space-5) var(--ds-space-7);
+    font-family: var(--ds-font-medium);
+    font-size: var(--ds-type-sm);
+    background: var(--ds-color-tab);
+    border: var(--ds-border-thin) solid var(--ds-color-border);
     border-bottom: none;
-    cursor: pointer;
-    color: var(--navy);
+    white-space: nowrap;
+    color: var(--ds-color-ink);
   }
-  .tab.active {
-    background: var(--white);
-    border-bottom: 2px solid var(--navy);
-    font-weight: 700;
+  .tab--active {
+    background: var(--ds-color-surface);
+    border-bottom: 2px solid var(--ds-color-ink);
+    font-family: var(--ds-font-bold);
   }
 
-  .main-grid {
+  /* ============ Workspace layout ============ */
+  .workspace { padding-block: var(--ds-space-10) var(--ds-space-20); }
+  .workspace__inner {
+    width: min(var(--ds-content-max), calc(100% - var(--ds-space-12)));
+    grid-template-columns: var(--ds-left-column) minmax(0, var(--ds-right-column));
+    gap: var(--ds-main-gap);
+    margin-inline: auto;
+    display: grid;
+  }
+  .left-column, .right-column, .middle-column {
+    gap: var(--ds-space-7);
+    flex-direction: column;
+    min-width: 0;
     display: flex;
-    gap: 24px;
-    align-items: flex-start;
   }
-  .col-left { width: 440px; flex-shrink: 0; display: flex; flex-direction: column; gap: 24px; }
-  .col-right { flex: 1; display: flex; flex-direction: column; gap: 24px; }
-  .col-right-top { display: flex; gap: 24px; }
 
-  /* ---------- CARDS ---------- */
-  .card {
-    border-radius: 8px;
-    padding: 24px;
-  }
-  .card.blue { background: var(--bg-blue); }
-  .card.white { background: var(--white); border: 1px solid var(--border-blue-2); }
-
-  .card-title-row {
+  /* ============ Panels (cards) ============ */
+  .panel {
+    gap: var(--ds-space-6);
+    padding: var(--ds-space-7);
+    flex-direction: column;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
+    border-radius: var(--ds-radius-md);
   }
-  .card-title {
-    font-size: 20px;
+  .panel--blue { background: var(--ds-color-surface-blue); }
+  .panel--outline { border: var(--ds-border-thin) solid var(--ds-color-border); background: var(--ds-color-surface); }
+
+  .panel-title { justify-content: space-between; align-items: flex-start; display: flex; }
+  .section-heading {
+    font-family: var(--ds-font-display);
     font-weight: 400;
+    font-size: var(--ds-type-md);
+    line-height: var(--ds-leading-heading);
     margin: 0;
+    color: var(--ds-color-ink);
   }
+  .subheading {
+    font-family: var(--ds-font-display);
+    font-weight: 400;
+    font-size: var(--ds-type-sm);
+    margin: 0 0 var(--ds-space-3) 0;
+    color: var(--ds-color-ink);
+  }
+
   .edit-link {
     display: inline-flex;
     align-items: center;
-    gap: 8px;
-    font-size: 16px;
-    font-weight: 500;
-    letter-spacing: 1px;
-    color: var(--navy);
+    gap: var(--ds-space-2);
+    font-family: var(--ds-font-medium);
+    font-size: var(--ds-type-sm);
+    letter-spacing: var(--ds-space-1);
     border: none;
     background: none;
-    border-bottom: 1.5px solid var(--navy);
-    padding-bottom: 2px;
-    cursor: pointer;
+    padding: 0;
+    border-bottom: 1.5px solid var(--ds-color-ink);
+    color: var(--ds-color-ink);
   }
 
-  .field-row {
-    display: flex;
-    gap: 16px;
-    padding: 4px 0;
+  .history-link {
+    align-items: center;
+    gap: var(--ds-space-1);
+    font-family: var(--ds-font-medium);
+    font-size: var(--ds-type-xs);
+    letter-spacing: var(--ds-space-1);
+    border-radius: var(--ds-radius-sm);
+    display: inline-flex;
+    border: none;
+    background: none;
+    border-bottom: 1.5px solid var(--ds-color-ink);
+    align-self: flex-start;
+    margin-top: var(--ds-space-3);
+    padding: 0;
+    color: var(--ds-color-ink);
   }
-  .field-label {
-    font-size: 14px;
-    font-weight: 500;
-    width: 175px;
-    flex-shrink: 0;
+
+  .detail-list { display: flex; flex-direction: column; gap: var(--ds-space-2); }
+  .detail-row {
+    padding-block: var(--ds-space-2);
+    grid-template-columns: 175px minmax(0, 1fr);
+    gap: var(--ds-space-5);
+    font-size: var(--ds-type-xs);
+    line-height: var(--ds-leading-body);
+    display: grid;
   }
-  .field-value {
-    font-size: 14px;
-    font-weight: 400;
-    flex: 1;
-  }
-  .field-group { display: flex; flex-direction: column; gap: 4px; margin-bottom: 8px; }
+  .detail-row__label { font-family: var(--ds-font-medium); }
+  .detail-row__value { font-family: var(--ds-font-regular); }
 
   .divider {
-    height: 1px;
-    background: rgba(9,16,51,0.15);
-    margin: 8px 0;
+    height: var(--ds-border-thin);
+    background: color-mix(in srgb, var(--ds-color-ink) 15%, transparent);
     border: none;
+    margin: var(--ds-space-2) 0;
   }
 
-  .view-history {
+  /* ============ Diagnose / privacy badge ============ */
+  .privacy-badge {
+    height: var(--ds-space-8);
+    align-items: center;
+    gap: var(--ds-space-2);
+    padding-inline: var(--ds-space-4);
+    border-radius: var(--ds-radius-round);
+    color: var(--ds-color-surface);
+    background: var(--ds-color-ink-muted);
+    font-family: var(--ds-font-medium);
+    font-size: var(--ds-type-xs);
+    white-space: nowrap;
     display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 16px;
-    font-weight: 500;
-    letter-spacing: 1px;
-    color: var(--navy);
-    background: none;
-    border: none;
-    border-bottom: 1.5px solid var(--navy);
-    padding-bottom: 2px;
-    cursor: pointer;
-    margin-top: 8px;
   }
 
-  .subsection-title {
-    font-size: 16px;
-    font-weight: 400;
-    margin: 0 0 8px 0;
-  }
-
-  .action-btn {
-    width: 440px;
-    height: 56px;
-    background: var(--navy);
-    color: var(--white);
-    border: none;
-    border-radius: 4px;
-    font-size: 20px;
-    font-weight: 500;
-    letter-spacing: 1px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 13px 16px;
-    cursor: pointer;
-  }
-
-  .dropdown-badge {
+  /* ============ Classification dropdown ============ */
+  .classification-select { width: 100%; display: block; }
+  .classification-select__control {
     width: 100%;
-    background: var(--yellow-bg);
-    border: 2px solid var(--border-blue-2);
-    border-radius: 4px;
-    padding: 12px 16px;
-    font-size: 16px;
-    font-weight: 400;
+    min-height: var(--ds-space-8);
+    border: 2px solid var(--ds-color-border);
+    color: var(--ds-color-ink);
+    background: var(--ds-color-classification-ordinary);
+    font-family: var(--ds-font-regular);
+    font-size: var(--ds-type-sm);
+    line-height: var(--ds-leading-body);
+    border-radius: var(--ds-radius-sm);
+    padding: var(--ds-space-4) var(--ds-space-5);
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+
+  /* ============ Risk assessment rows ============ */
+  .risk-list { display: flex; flex-direction: column; gap: var(--ds-space-2); }
+  .risk-row {
+    min-height: var(--ds-space-8);
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: var(--ds-space-5);
+    padding: var(--ds-space-3);
+    font-size: var(--ds-type-xs);
+    line-height: var(--ds-leading-body);
+    display: flex;
+    border-radius: var(--ds-radius-sm);
+    color: var(--ds-color-ink);
+  }
+  .risk-row > :first-child { font-family: var(--ds-font-medium); }
+  .risk-row > :last-child { width: var(--ds-space-7); font-family: var(--ds-font-regular); flex: none; text-align: right; }
+  .risk-row--alert { background: var(--ds-color-danger-soft); }
+
+  /* ============ Action buttons ============ */
+  .primary-action {
+    min-height: var(--ds-header-row);
+    padding: var(--ds-space-4) var(--ds-space-5);
+    border-radius: var(--ds-radius-sm);
+    color: var(--ds-color-surface);
+    background: var(--ds-color-ink);
+    font-family: var(--ds-font-medium);
+    font-size: var(--ds-type-md);
+    letter-spacing: var(--ds-space-1);
+    justify-content: space-between;
+    align-items: center;
+    display: flex;
+    border: none;
+    width: 100%;
+  }
+
+  /* ============ Assessment table ============ */
+  .assessment { background: var(--ds-color-surface); border: var(--ds-border-thin) solid var(--ds-color-border); border-radius: var(--ds-radius-md); padding: var(--ds-space-7); }
+  .assessment__title { margin: 0 0 var(--ds-space-5) 0; }
+  .table-scroll { overflow-x: auto; }
+  .assessment-table { width: 100%; min-width: var(--ds-right-column); border-collapse: collapse; }
+  .assessment-table__header, .assessment-table__row {
+    grid-template-columns: 48px 105px 109px 95px 1fr 160px;
+    display: grid;
+  }
+  .assessment-table__header { height: var(--ds-table-heading); background: var(--ds-color-surface-blue); }
+  .assessment-table__row--default { height: var(--ds-table-row-default); }
+
+  .table-heading {
+    align-items: center;
+    gap: var(--ds-space-3);
+    padding-inline: var(--ds-space-5);
+    font-family: var(--ds-font-medium);
+    font-size: var(--ds-type-xs);
+    border-bottom: var(--ds-border-thin) solid var(--ds-color-border-soft);
+    display: flex;
+    color: var(--ds-color-ink);
+  }
+  .table-heading--empty { padding-inline: 0; }
+
+  .table-cell {
+    align-items: center;
+    gap: var(--ds-space-3);
+    padding-inline: var(--ds-space-5);
+    border-bottom: var(--ds-border-thin) solid var(--ds-color-border-soft);
+    display: flex;
+    background: var(--ds-color-surface);
+    font-family: var(--ds-font-regular);
+    font-size: var(--ds-type-xs);
+    line-height: var(--ds-leading-table);
+    color: var(--ds-color-ink);
+  }
+  .table-cell--chevron {
+    border-left: var(--ds-border-thin) solid var(--ds-color-border-soft);
+    justify-content: center;
+    padding-inline: 0;
     cursor: pointer;
   }
 
-  .cd-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-    background: var(--badge-gray);
-    color: var(--white);
-    border-radius: 999px;
-    padding: 2px 8px;
-    font-size: 14px;
-    font-weight: 500;
+  .status-marker {
+    width: var(--ds-space-7);
+    height: var(--ds-space-7);
+    border-radius: var(--ds-radius-round);
+    color: var(--ds-color-surface);
+    background: var(--ds-color-avatar);
+    font-family: var(--ds-font-bold);
+    font-size: var(--ds-type-status);
+    flex: none;
+    display: grid;
+    place-items: center;
   }
 
-  .highlight-row { background: var(--pink-highlight); border-radius: 4px; margin: 0 -8px; padding: 8px !important; }
-  .risk-row { display: flex; justify-content: space-between; padding: 8px; gap: 16px; }
-  .risk-row .field-label { width: auto; flex: 1; }
-  .risk-row .field-value { flex: 0 0 auto; text-align: right; }
-
-  /* ---------- TABLE ---------- */
-  .table-card { background: var(--white); border: 1px solid var(--border-blue-2); border-radius: 8px; padding: 24px; }
-  table { width: 100%; border-collapse: collapse; font-size: 14px; }
-  th {
-    background: var(--bg-blue);
-    border: 1px solid var(--border-blue);
-    text-align: left;
-    padding: 10px 16px;
-    font-weight: 500;
-    font-size: 14px;
-  }
-  td {
-    border: 1px solid var(--border-blue);
-    padding: 10px 16px;
-    font-size: 14px;
-  }
-  .m-badge {
-    width: 28px; height: 28px; border-radius: 50%;
-    background: var(--purple);
-    color: var(--white);
-    display: inline-flex; align-items: center; justify-content: center;
-    font-size: 10px; font-weight: 400;
-  }
   .initials-pill {
     display: inline-block;
-    background: var(--white);
-    border: 1px solid var(--border-blue-2);
-    border-radius: 999px;
-    padding: 4px 10px;
-    font-size: 14px;
+    background: var(--ds-color-surface);
+    border: var(--ds-border-thin) solid var(--ds-color-border);
+    border-radius: var(--ds-radius-round);
+    padding: var(--ds-space-2) var(--ds-space-4);
+    font-size: var(--ds-type-xs);
   }
-  .expand-chevron { cursor: pointer; color: var(--navy); }
 
-  /* ---------- ACCORDIONS ---------- */
-  .accordion {
-    background: var(--bg-blue);
-    border-radius: 8px;
-    padding: 24px;
+  /* ============ Expandable sections ============ */
+  .expandable-row, .medical-documents {
+    border-radius: var(--ds-radius-md);
+    color: var(--ds-color-ink);
+    background: var(--ds-color-surface-blue);
+    overflow: hidden;
+    display: block;
+  }
+  .expandable-row > summary, .medical-documents > summary {
+    list-style: none;
+    padding: var(--ds-space-7);
     display: flex;
     justify-content: space-between;
     align-items: center;
+    font-family: var(--ds-font-display);
+    font-size: var(--ds-type-md);
     cursor: pointer;
-    font-size: 20px;
-    font-weight: 400;
   }
-
-  .icon { width: 16px; height: 16px; display: inline-block; }
+  .expandable-row > summary::-webkit-details-marker,
+  .medical-documents > summary::-webkit-details-marker { display: none; }
+  .medical-documents[open] > summary { background: var(--ds-color-tab); font-family: var(--ds-font-medium); }
 </style>
 </head>
 <body>
 
-  <div class="header-bar">
-    <div class="logo-area">
-      <div class="logo-dot">G</div>
-      <span class="app-title">Alarmen</span>
+<div class="app-shell">
+
+  <div class="top-bar">
+    <div class="brand">
+      <div class="brand-mark">G</div>
+      <span class="app-name">Alarmen</span>
     </div>
-    <div class="profile-area">
+    <div class="profile">
       <div class="avatar">S</div>
       <span class="profile-name">Silje</span>
-      <span class="chevron-white">▾</span>
+      <span>▾</span>
     </div>
   </div>
 
-  <div class="nav-bar">
-    <div class="nav-item">My cases</div>
-    <div class="nav-item">My tasks</div>
-    <div class="nav-item">Team dashboard</div>
-    <div class="nav-item">Incoming e-mail</div>
-  </div>
+  <nav class="navigation" aria-label="Primary">
+    <span class="navigation__item">My cases</span>
+    <span class="navigation__item">My tasks</span>
+    <span class="navigation__item">Team dashboard</span>
+    <span class="navigation__item">Incoming e-mail</span>
+  </nav>
 
-  <div class="content-wrap">
-
-    <button class="back-btn">← Back</button>
-
-    <div class="patient-header">
-      <h1 class="patient-name">Name Nameson 🇳🇴 📌</h1>
-      <p class="case-number">Case number: 123456789</p>
+  <header class="case-header">
+    <div class="case-header__inner">
+      <button class="back-link">← Back</button>
+      <div class="case-title">
+        <div class="case-title__line">
+          <h1 class="page-heading">Name Nameson 🇳🇴 📌</h1>
+        </div>
+        <p class="case-number">Case number: 123456789</p>
+      </div>
+      <div class="tabs">
+        <span class="tab">Tab</span>
+        <span class="tab">Tab</span>
+        <span class="tab tab--active">Medical</span>
+        <span class="tab">Tab</span>
+        <span class="tab">Tab</span>
+        <span class="tab">Tab</span>
+        <span class="tab">Tab</span>
+        <span class="tab">Tab</span>
+      </div>
     </div>
+  </header>
 
-    <div class="tabs">
-      <div class="tab">Tab</div>
-      <div class="tab">Tab</div>
-      <div class="tab active">Medical</div>
-      <div class="tab">Tab</div>
-      <div class="tab">Tab</div>
-      <div class="tab">Tab</div>
-      <div class="tab">Tab</div>
-      <div class="tab">Tab</div>
-    </div>
-
-    <div class="main-grid">
+  <div class="workspace">
+    <div class="workspace__inner">
 
       <!-- LEFT COLUMN -->
-      <div class="col-left">
+      <div class="left-column">
 
-        <div class="card blue">
-          <div class="card-title-row">
-            <h3 class="card-title">Hospital</h3>
+        <section class="panel panel--blue">
+          <div class="panel-title">
+            <h3 class="section-heading">Hospital</h3>
             <button class="edit-link">✎ Edit</button>
           </div>
-          <div class="field-group">
-            <div class="field-row"><div class="field-label">Hospital</div><div class="field-value">Bumrungrad hospital, Bankkok, Thailand</div></div>
-            <div class="field-row"><div class="field-label">Phone number</div><div class="field-value">+ 66 2 849 0383</div></div>
-            <div class="field-row"><div class="field-label">Location</div><div class="field-value">33 Soi Sukumvit, 3, Bankok, Thailand</div></div>
+          <div class="detail-list">
+            <div class="detail-row"><span class="detail-row__label">Hospital</span><span class="detail-row__value">Bumrungrad hospital, Bankkok, Thailand</span></div>
+            <div class="detail-row"><span class="detail-row__label">Phone number</span><span class="detail-row__value">+ 66 2 849 0383</span></div>
+            <div class="detail-row"><span class="detail-row__label">Location</span><span class="detail-row__value">33 Soi Sukumvit, 3, Bankok, Thailand</span></div>
           </div>
           <hr class="divider">
-          <div class="field-group">
-            <div class="field-row"><div class="field-label">Department</div><div class="field-value">Neurology</div></div>
-            <div class="field-row"><div class="field-label">Treating doctor</div><div class="field-value">Name Nameson</div></div>
-            <div class="field-row"><div class="field-label">Number of treating doctor</div><div class="field-value">+ 66 3 749 0383</div></div>
+          <div class="detail-list">
+            <div class="detail-row"><span class="detail-row__label">Department</span><span class="detail-row__value">Neurology</span></div>
+            <div class="detail-row"><span class="detail-row__label">Treating doctor</span><span class="detail-row__value">Name Nameson</span></div>
+            <div class="detail-row"><span class="detail-row__label">Number of treating doctor</span><span class="detail-row__value">+ 66 3 749 0383</span></div>
           </div>
-        </div>
+        </section>
 
-        <div class="card blue">
-          <div class="card-title-row">
-            <h3 class="card-title">Treatment</h3>
+        <section class="panel panel--blue">
+          <div class="panel-title">
+            <h3 class="section-heading">Treatment</h3>
             <button class="edit-link">✎ Edit</button>
           </div>
-          <div class="field-group">
-            <div class="field-row"><div class="field-label">Type of patient</div><div class="field-value">In-patient</div></div>
-            <div class="field-row"><div class="field-label">Date of admission</div><div class="field-value">2026-06-28</div></div>
-            <div class="field-row"><div class="field-label">Date of discharge</div><div class="field-value">-</div></div>
-            <div class="field-row"><div class="field-label">Description of incident</div><div class="field-value">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</div></div>
+          <div class="detail-list">
+            <div class="detail-row"><span class="detail-row__label">Type of patient</span><span class="detail-row__value">In-patient</span></div>
+            <div class="detail-row"><span class="detail-row__label">Date of admission</span><span class="detail-row__value">2026-06-28</span></div>
+            <div class="detail-row"><span class="detail-row__label">Date of discharge</span><span class="detail-row__value">-</span></div>
+            <div class="detail-row"><span class="detail-row__label">Description of incident</span><span class="detail-row__value">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span></div>
           </div>
-          <button class="view-history">⌄ View history</button>
-        </div>
+          <button class="history-link">⌄ View history</button>
+        </section>
 
-        <div class="card blue">
-          <div class="card-title-row">
-            <h3 class="card-title">Doctors</h3>
+        <section class="panel panel--blue">
+          <div class="panel-title">
+            <h3 class="section-heading">Doctors</h3>
             <button class="edit-link">✎ Edit</button>
           </div>
-          <p class="subsection-title">Contact Doctor 1</p>
-          <div class="field-group">
-            <div class="field-row"><div class="field-label">Name &amp; Type</div><div class="field-value">Jason Peterson - Cardiolagist</div></div>
-            <div class="field-row"><div class="field-label">Involvement in the case</div><div class="field-value">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div></div>
+          <h4 class="subheading">Contact Doctor 1</h4>
+          <div class="detail-list">
+            <div class="detail-row"><span class="detail-row__label">Name &amp; Type</span><span class="detail-row__value">Jason Peterson - Cardiolagist</span></div>
+            <div class="detail-row"><span class="detail-row__label">Involvement in the case</span><span class="detail-row__value">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span></div>
           </div>
-        </div>
+        </section>
 
-        <button class="action-btn">Create Transport Assessment <span>+</span></button>
-        <button class="action-btn">Create Fit For Flight <span>+</span></button>
+        <button class="primary-action">Create Transport Assessment <span>+</span></button>
+        <button class="primary-action">Create Fit For Flight <span>+</span></button>
 
       </div>
 
       <!-- RIGHT COLUMN -->
-      <div class="col-right">
+      <div class="right-column">
 
-        <div class="col-right-top">
-          <div style="flex-shrink:0; width:440px; display:flex; flex-direction:column; gap:16px;">
-            <button class="dropdown-badge">Ordinary illness <span>⌄</span></button>
+        <div style="display:grid; grid-template-columns: 440px 1fr; gap: 24px; align-items: start;">
 
-            <div class="card white">
-              <div class="card-title-row">
-                <h3 class="card-title">Diagnose</h3>
-                <span class="cd-badge">🔒 CD Only</span>
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div class="classification-select">
+              <div class="classification-select__control">Ordinary illness <span>⌄</span></div>
+            </div>
+
+            <section class="panel panel--outline">
+              <div class="panel-title">
+                <h3 class="section-heading">Diagnose</h3>
+                <span class="privacy-badge">🔒 CD Only</span>
               </div>
 
-              <p class="subsection-title">Diagnose 1</p>
-              <div class="field-group">
-                <div class="field-row"><div class="field-label" style="width:50px;">ICD-10</div><div class="field-value">E12.5</div></div>
-                <div class="field-row"><div class="field-label" style="width:50px;">English</div><div class="field-value">Malnutrition-related diabetes mellitus with peripheral circulatory disorder</div></div>
+              <div>
+                <h4 class="subheading">Diagnose 1</h4>
+                <div class="detail-list">
+                  <div class="detail-row" style="grid-template-columns:50px minmax(0,1fr);"><span class="detail-row__label">ICD-10</span><span class="detail-row__value">E12.5</span></div>
+                  <div class="detail-row" style="grid-template-columns:50px minmax(0,1fr);"><span class="detail-row__label">English</span><span class="detail-row__value">Malnutrition-related diabetes mellitus with peripheral circulatory disorder</span></div>
+                </div>
               </div>
 
-              <p class="subsection-title" style="margin-top:12px;">Diagnose 2</p>
-              <div class="field-group">
-                <div class="field-row"><div class="field-label" style="width:50px;">ICD-10</div><div class="field-value">T67.0</div></div>
-                <div class="field-row"><div class="field-label" style="width:50px;">English</div><div class="field-value">Heatstroke and sunstroke</div></div>
+              <div>
+                <h4 class="subheading">Diagnose 2</h4>
+                <div class="detail-list">
+                  <div class="detail-row" style="grid-template-columns:50px minmax(0,1fr);"><span class="detail-row__label">ICD-10</span><span class="detail-row__value">T67.0</span></div>
+                  <div class="detail-row" style="grid-template-columns:50px minmax(0,1fr);"><span class="detail-row__label">English</span><span class="detail-row__value">Heatstroke and sunstroke</span></div>
+                </div>
               </div>
 
-              <p class="subsection-title" style="margin-top:12px;">Diagnose 3</p>
-              <div class="field-group">
-                <div class="field-row"><div class="field-label" style="width:50px;">ICD-10</div><div class="field-value">T67.0</div></div>
-                <div class="field-row"><div class="field-label" style="width:50px;">English</div><div class="field-value">Heatstroke and sunstroke</div></div>
+              <div>
+                <h4 class="subheading">Diagnose 3</h4>
+                <div class="detail-list">
+                  <div class="detail-row" style="grid-template-columns:50px minmax(0,1fr);"><span class="detail-row__label">ICD-10</span><span class="detail-row__value">T67.0</span></div>
+                  <div class="detail-row" style="grid-template-columns:50px minmax(0,1fr);"><span class="detail-row__label">English</span><span class="detail-row__value">Heatstroke and sunstroke</span></div>
+                </div>
+              </div>
+            </section>
+          </div>
+
+          <section class="panel panel--outline">
+            <div class="panel-title">
+              <h3 class="section-heading">Risk Assesment</h3>
+              <span class="privacy-badge">🔒 CD Only</span>
+            </div>
+            <div class="risk-list">
+              <div class="risk-row"><span>Urgent</span><span>No</span></div>
+              <div class="risk-row risk-row--alert"><span>Serious</span><span>Yes</span></div>
+              <div class="risk-row"><span>Life threatning</span><span>No</span></div>
+              <div class="risk-row"><span>Possible pre-existing medical condition (DK &amp; SE cases)</span><span>No</span></div>
+              <div class="risk-row"><span>Possible FBB (NO cases)</span><span>No</span></div>
+              <div class="risk-row risk-row--alert"><span>Possible overtreatment</span><span>Yes</span></div>
+              <div class="risk-row"><span>Possible treatment failure</span><span>No</span></div>
+              <div class="risk-row"><span>Need for urgent evacuation</span><span>No</span></div>
+            </div>
+          </section>
+        </div>
+
+        <section class="assessment">
+          <h3 class="section-heading assessment__title">Interventions &amp; Transport Assessment</h3>
+          <div class="table-scroll">
+            <div class="assessment-table">
+              <div class="assessment-table__header" role="row">
+                <div class="table-heading table-heading--empty"></div>
+                <div class="table-heading">Order ⇅</div>
+                <div class="table-heading">Date ⇅</div>
+                <div class="table-heading">Time</div>
+                <div class="table-heading">Intervention</div>
+                <div class="table-heading">Initials ⇅</div>
+              </div>
+
+              <div class="assessment-table__row assessment-table__row--default" role="row">
+                <div class="table-cell table-cell--chevron">⌄</div>
+                <div class="table-cell"><span class="status-marker">M5</span></div>
+                <div class="table-cell">2026-08-18</div>
+                <div class="table-cell">14:35</div>
+                <div class="table-cell">Intervention based on Medical Report</div>
+                <div class="table-cell"><span class="initials-pill">NKV</span></div>
+              </div>
+              <div class="assessment-table__row assessment-table__row--default" role="row">
+                <div class="table-cell table-cell--chevron">⌄</div>
+                <div class="table-cell"><span class="status-marker">M4</span></div>
+                <div class="table-cell">2026-08-17</div>
+                <div class="table-cell">09:20</div>
+                <div class="table-cell">Intervention based on TP consultation</div>
+                <div class="table-cell"><span class="initials-pill">JHN</span></div>
+              </div>
+              <div class="assessment-table__row assessment-table__row--default" role="row">
+                <div class="table-cell table-cell--chevron">⌄</div>
+                <div class="table-cell"><span class="status-marker">M3</span></div>
+                <div class="table-cell">2026-08-16</div>
+                <div class="table-cell">18:45</div>
+                <div class="table-cell">CLI informed and agrees to Medical transport plan</div>
+                <div class="table-cell"><span class="initials-pill">NKV</span></div>
+              </div>
+              <div class="assessment-table__row assessment-table__row--default" role="row">
+                <div class="table-cell table-cell--chevron">⌄</div>
+                <div class="table-cell"><span class="status-marker">M2</span></div>
+                <div class="table-cell">2026-08-15</div>
+                <div class="table-cell">07:10</div>
+                <div class="table-cell">Other</div>
+                <div class="table-cell"><span class="initials-pill">SRN</span></div>
+              </div>
+              <div class="assessment-table__row assessment-table__row--default" role="row">
+                <div class="table-cell table-cell--chevron">⌄</div>
+                <div class="table-cell"><span class="status-marker">M1</span></div>
+                <div class="table-cell">2026-08-14</div>
+                <div class="table-cell">22:55</div>
+                <div class="table-cell">Intervention based on Medical Report</div>
+                <div class="table-cell"><span class="initials-pill">NKV</span></div>
               </div>
             </div>
           </div>
+        </section>
 
-          <div class="card white" style="flex:1;">
-            <div class="card-title-row">
-              <h3 class="card-title">Risk Assesment</h3>
-              <span class="cd-badge">🔒 CD Only</span>
-            </div>
-            <div class="risk-row"><div class="field-label">Urgent</div><div class="field-value">No</div></div>
-            <div class="risk-row highlight-row"><div class="field-label">Serious</div><div class="field-value">Yes</div></div>
-            <div class="risk-row"><div class="field-label">Life threatning</div><div class="field-value">No</div></div>
-            <div class="risk-row"><div class="field-label">Possible pre-existing medical condition (DK &amp; SE cases)</div><div class="field-value">No</div></div>
-            <div class="risk-row"><div class="field-label">Possible FBB (NO cases)</div><div class="field-value">No</div></div>
-            <div class="risk-row highlight-row"><div class="field-label">Possible overtreatment</div><div class="field-value">Yes</div></div>
-            <div class="risk-row"><div class="field-label">Possible treatment failure</div><div class="field-value">No</div></div>
-            <div class="risk-row"><div class="field-label">Need for urgent evacuation</div><div class="field-value">No</div></div>
-          </div>
-        </div>
-
-        <div class="table-card">
-          <h3 class="card-title" style="margin-bottom:16px;">Interventions &amp; Transport Assessment</h3>
-          <table>
-            <thead>
-              <tr>
-                <th style="width:48px;"></th>
-                <th>Order ⇅</th>
-                <th>Date ⇅</th>
-                <th>Time</th>
-                <th>Intervention</th>
-                <th>Initials ⇅</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td class="expand-chevron">⌄</td>
-                <td><span class="m-badge">M5</span></td>
-                <td>2026-08-18</td>
-                <td>14:35</td>
-                <td>Intervention based on Medical Report</td>
-                <td><span class="initials-pill">NKV</span></td>
-              </tr>
-              <tr>
-                <td class="expand-chevron">⌄</td>
-                <td><span class="m-badge">M4</span></td>
-                <td>2026-08-17</td>
-                <td>09:20</td>
-                <td>Intervention based on TP consultation</td>
-                <td><span class="initials-pill">JHN</span></td>
-              </tr>
-              <tr>
-                <td class="expand-chevron">⌄</td>
-                <td><span class="m-badge">M3</span></td>
-                <td>2026-08-16</td>
-                <td>18:45</td>
-                <td>CLI informed and agrees to Medical transport plan</td>
-                <td><span class="initials-pill">NKV</span></td>
-              </tr>
-              <tr>
-                <td class="expand-chevron">⌄</td>
-                <td><span class="m-badge">M2</span></td>
-                <td>2026-08-15</td>
-                <td>07:10</td>
-                <td>Other</td>
-                <td><span class="initials-pill">SRN</span></td>
-              </tr>
-              <tr>
-                <td class="expand-chevron">⌄</td>
-                <td><span class="m-badge">M1</span></td>
-                <td>2026-08-14</td>
-                <td>22:55</td>
-                <td>Intervention based on Medical Report</td>
-                <td><span class="initials-pill">NKV</span></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <div class="accordion">Screening Questions <span>⌄</span></div>
-        <div class="accordion">Medical Documents <span>⌄</span></div>
+        <details class="expandable-row">
+          <summary>Screening Questions <span>⌄</span></summary>
+        </details>
+        <details class="medical-documents">
+          <summary>Medical Documents <span>⌄</span></summary>
+        </details>
 
       </div>
     </div>
   </div>
+
+</div>
 
 </body>
 </html>
