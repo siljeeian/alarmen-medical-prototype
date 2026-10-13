@@ -181,11 +181,11 @@
     letter-spacing: var(--ds-space-1); justify-content: space-between; align-items: center; display: flex; border: none; width: 100%; cursor: default; }
   .primary-action .icon { color: var(--ds-color-surface); }
 
-  .assessment { background: var(--ds-color-surface); border: var(--ds-border-thin) solid var(--ds-color-border); border-radius: var(--ds-radius-md); padding: var(--ds-space-7); overflow: hidden; }
-  .assessment-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--ds-space-5); }
+  .assessment { background: var(--ds-color-surface); padding: 0; }
+  .assessment-header { display: flex; justify-content: space-between; align-items: center; padding: var(--ds-space-7); background: var(--ds-color-surface-blue); }
   .add-btn { display: inline-flex; align-items: center; gap: var(--ds-space-2); background: var(--ds-color-ink); color: var(--ds-color-surface);
-    border: none; border-radius: var(--ds-radius-sm); padding: var(--ds-space-3) var(--ds-space-5); font-family: var(--ds-font-medium); font-size: var(--ds-type-xs); }
-  .table-scroll { overflow-x: auto; border: var(--ds-border-thin) solid var(--ds-color-border); border-radius: var(--ds-radius-md); overflow: hidden; }
+    border: none; border-radius: var(--ds-radius-sm); padding: var(--ds-space-4) var(--ds-space-5); font-family: var(--ds-font-medium); font-size: var(--ds-type-md); }
+  .table-scroll { overflow-x: auto; }
   .assessment-table { width: 100%; min-width: var(--ds-right-column); }
   .assessment-table__header, .assessment-table__row { grid-template-columns: 48px 105px 109px 95px 455px 108px; display: grid; }
   .assessment-table__header { height: var(--ds-table-heading); background: var(--ds-color-surface-blue); }
@@ -478,8 +478,8 @@
 
       <section class="assessment" data-editable-by="CD">
         <div class="assessment-header">
-          <h3 class="section-heading">Interventions &amp; Transport Assessment</h3>
-          <button class="add-btn edit-action"><svg class="icon"><use href="#icon-add"/></svg> Add Intervention</button>
+          <h3 class="section-heading" style="font-size: var(--ds-type-page);">Interventions &amp; Transport Assessment</h3>
+          <button class="add-btn edit-action"><svg class="icon" style="width:20px;height:20px;"><use href="#icon-add"/></svg> Add Intervention</button>
           <span class="role-badge" style="display:none;"><svg class="icon"><use href="#icon-lock"/></svg> CD Only</span>
         </div>
         <div class="table-scroll">
