@@ -181,13 +181,13 @@
     letter-spacing: var(--ds-space-1); justify-content: space-between; align-items: center; display: flex; border: none; width: 100%; cursor: default; }
   .primary-action .icon { color: var(--ds-color-surface); }
 
-  .assessment { background: var(--ds-color-surface); border: var(--ds-border-thin) solid var(--ds-color-border); padding: 0; }
-  .assessment-header { display: flex; justify-content: space-between; align-items: center; padding: var(--ds-space-7); border-bottom: var(--ds-border-thin) solid var(--ds-color-border-soft); background: var(--ds-color-surface-blue); }
+  .assessment { background: var(--ds-color-surface); border: var(--ds-border-thin) solid var(--ds-color-border); border-radius: var(--ds-radius-md); padding: var(--ds-space-7); overflow: hidden; }
+  .assessment-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--ds-space-5); }
   .add-btn { display: inline-flex; align-items: center; gap: var(--ds-space-2); background: var(--ds-color-ink); color: var(--ds-color-surface);
     border: none; border-radius: var(--ds-radius-sm); padding: var(--ds-space-3) var(--ds-space-5); font-family: var(--ds-font-medium); font-size: var(--ds-type-xs); }
-  .table-scroll { overflow-x: auto; }
+  .table-scroll { overflow-x: auto; border: var(--ds-border-thin) solid var(--ds-color-border); border-radius: var(--ds-radius-md); overflow: hidden; }
   .assessment-table { width: 100%; min-width: var(--ds-right-column); }
-  .assessment-table__header, .assessment-table__row { grid-template-columns: 48px 105px 109px 95px 1fr 160px; display: grid; }
+  .assessment-table__header, .assessment-table__row { grid-template-columns: 48px 105px 109px 95px 455px 108px; display: grid; }
   .assessment-table__header { height: var(--ds-table-heading); background: var(--ds-color-surface-blue); }
   .assessment-table__row { height: var(--ds-table-row-default); }
   .assessment-table__row.expanded { height: auto; }
@@ -196,6 +196,10 @@
   .table-heading { align-items: center; gap: var(--ds-space-3); padding-inline: var(--ds-space-5); font-family: var(--ds-font-medium);
     font-size: var(--ds-type-xs); border-bottom: var(--ds-border-thin) solid var(--ds-color-border-soft); display: flex; }
   .table-heading--empty { padding-inline: 0; }
+  .table-heading--divider { border-right: var(--ds-border-thin) solid var(--ds-color-border); }
+  .table-heading--spread { justify-content: space-between; }
+  .sort-icon, .filter-icon { width: 24px; height: 24px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; cursor: pointer; }
+  .sort-icon .icon, .filter-icon .icon { color: var(--ds-color-ink-muted); }
 
   .table-cell { align-items: center; gap: var(--ds-space-3); padding-inline: var(--ds-space-5);
     border-bottom: var(--ds-border-thin) solid var(--ds-color-border-soft); display: flex; background: var(--ds-color-surface);
@@ -206,6 +210,9 @@
 
   .status-marker { width: var(--ds-space-7); height: var(--ds-space-7); border-radius: var(--ds-radius-round); color: var(--ds-color-surface);
     background: var(--ds-color-avatar); font-family: var(--ds-font-bold); font-size: var(--ds-type-status); flex: none; display: grid; place-items: center; }
+
+  .initials-pill { display: inline-block; background: var(--ds-color-surface); border: var(--ds-border-thin) solid var(--ds-color-border);
+    border-radius: var(--ds-radius-round); padding: 2px var(--ds-space-3); font-size: var(--ds-type-xs); }
 
   details.screening-questions, details.medical-documents {
     border-radius: var(--ds-radius-md); background: var(--ds-color-surface-blue); overflow: hidden; display: block;
@@ -291,6 +298,7 @@
   <symbol id="icon-person" viewBox="0 0 24 24"><path d="M12 9.56757C14.0538 9.56757 15.7188 7.87351 15.7188 5.78378C15.7188 3.69406 14.0538 2 12 2C9.94619 2 8.28125 3.69406 8.28125 5.78378C8.28125 7.87351 9.94619 9.56757 12 9.56757Z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round" fill="none"/><path d="M12 13.8919C8.5211 13.8919 6.49231 15.7121 5.625 16.5946C4.75769 17.4771 3.5 19.4195 3.5 22H20.5C20.5 19.4195 19.4375 17.6757 18.375 16.5946C17.2441 15.444 15.4789 13.8919 12 13.8919Z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round" fill="none"/></symbol>
   <symbol id="icon-close" viewBox="0 0 24 24"><path d="M19 5L5 19M5 5L19 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
   <symbol id="icon-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="1" stroke="currentColor" stroke-width="2" fill="none"/><path d="M3 9H21M8 3V7M16 3V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></symbol>
+  <symbol id="icon-filter" viewBox="0 0 24 24"><path d="M4 6H20M7 12H17M10 18H14" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></symbol>
 </svg>
 
 <div class="top-bar">
@@ -476,11 +484,11 @@
           <div class="assessment-table">
             <div class="assessment-table__header" role="row">
               <div class="table-heading table-heading--empty"></div>
-              <div class="table-heading">Order <svg class="icon"><use href="#icon-sort"/></svg></div>
-              <div class="table-heading">Date <svg class="icon"><use href="#icon-sort"/></svg></div>
-              <div class="table-heading">Time</div>
-              <div class="table-heading">Intervention</div>
-              <div class="table-heading">Name</div>
+              <div class="table-heading table-heading--divider table-heading--spread">Order <span class="sort-icon"><svg class="icon"><use href="#icon-sort"/></svg></span></div>
+              <div class="table-heading table-heading--divider table-heading--spread">Date <span class="sort-icon"><svg class="icon"><use href="#icon-sort"/></svg></span></div>
+              <div class="table-heading table-heading--divider">Time</div>
+              <div class="table-heading table-heading--divider table-heading--spread">Intervention <span class="filter-icon"><svg class="icon"><use href="#icon-filter"/></svg></span></div>
+              <div class="table-heading table-heading--spread">Initials <span class="filter-icon"><svg class="icon"><use href="#icon-filter"/></svg></span></div>
             </div>
 
             <div class="assessment-table__row" role="row" data-detail="CLI confirmed fit to fly, awaiting final transport confirmation from local agent.">
@@ -488,35 +496,35 @@
               <div class="table-cell"><span class="status-marker">M5</span></div>
               <div class="table-cell">18.08.2026</div><div class="table-cell">14:35</div>
               <div class="table-cell">Intervention based on Medical Report</div>
-              <div class="table-cell">NKV</div>
+              <div class="table-cell"><span class="initials-pill">NKV</span></div>
             </div>
             <div class="assessment-table__row" role="row" data-detail="TP consultation completed, recommendation pending.">
               <div class="table-cell table-cell--chevron" onclick="toggleRow(this)"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
               <div class="table-cell"><span class="status-marker">M4</span></div>
               <div class="table-cell">17.08.2026</div><div class="table-cell">09:20</div>
               <div class="table-cell">Intervention based on TP consultation</div>
-              <div class="table-cell">JHN</div>
+              <div class="table-cell"><span class="initials-pill">JHN</span></div>
             </div>
             <div class="assessment-table__row" role="row" data-detail="CLI informed and agrees to Medical transport plan. Next intervention planned 18.08.2026.">
               <div class="table-cell table-cell--chevron" onclick="toggleRow(this)"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
               <div class="table-cell"><span class="status-marker">M3</span></div>
               <div class="table-cell">16.08.2026</div><div class="table-cell">18:45</div>
               <div class="table-cell">Intervention Discussed with another CD</div>
-              <div class="table-cell">NKV</div>
+              <div class="table-cell"><span class="initials-pill">NKV</span></div>
             </div>
             <div class="assessment-table__row" role="row" data-detail="Answered additional questions from AC regarding transport logistics.">
               <div class="table-cell table-cell--chevron" onclick="toggleRow(this)"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
               <div class="table-cell"><span class="status-marker">M2</span></div>
               <div class="table-cell">15.08.2026</div><div class="table-cell">07:10</div>
               <div class="table-cell">Answering Questions from AC</div>
-              <div class="table-cell">SRN</div>
+              <div class="table-cell"><span class="initials-pill">SRN</span></div>
             </div>
             <div class="assessment-table__row" role="row" data-detail="ESN/ESD informed about CLI's medical history ahead of admission.">
               <div class="table-cell table-cell--chevron" onclick="toggleRow(this)"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
               <div class="table-cell"><span class="status-marker">M1</span></div>
               <div class="table-cell">14.08.2026</div><div class="table-cell">22:55</div>
               <div class="table-cell">ESN/ESD informed about CLI's medical history</div>
-              <div class="table-cell">NKV</div>
+              <div class="table-cell"><span class="initials-pill">NKV</span></div>
             </div>
           </div>
         </div>
@@ -733,7 +741,7 @@
     detailRow.className = 'assessment-table__row expanded-detail-row';
     detailRow.style.gridTemplateColumns = '1fr';
     detailRow.style.height = 'auto';
-    detailRow.innerHTML = '<div class="expanded-detail" style="grid-column:1/-1; margin-left:357px; width:calc(100% - 357px - 160px);">' + row.dataset.detail + '</div>';
+    detailRow.innerHTML = '<div class="expanded-detail" style="grid-column:1/-1; margin-left:357px; width:calc(100% - 357px - 108px);">' + row.dataset.detail + '</div>';
     row.after(detailRow);
   }
 
