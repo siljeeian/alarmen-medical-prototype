@@ -189,9 +189,12 @@
   .assessment-table { width: 100%; min-width: var(--ds-right-column); }
   .assessment-table__header, .assessment-table__row { grid-template-columns: 48px 105px 109px 95px 455px 108px; display: grid; }
   .assessment-table__header { height: var(--ds-table-heading); background: var(--ds-color-surface-blue); }
-  .assessment-table__row { height: var(--ds-table-row-default); }
-  .assessment-table__row.expanded { height: auto; }
-  .expanded-detail { grid-column: 5 / 6; padding: var(--ds-space-4) var(--ds-space-5); font-size: var(--ds-type-xs); border-bottom: var(--ds-border-thin) solid var(--ds-color-border-soft); }
+  .assessment-table__row { height: var(--ds-table-row-default); align-items: center; }
+  .assessment-table__row.expanded { height: auto; align-items: start; background: var(--ds-color-surface-blue); }
+  .assessment-table__row.expanded .table-cell { align-self: start; padding-top: var(--ds-space-4); padding-bottom: var(--ds-space-4); }
+  .intervention-title { font-family: var(--ds-font-medium); }
+  .intervention-detail { display: none; flex-direction: column; gap: var(--ds-space-5); margin-top: var(--ds-space-5); font-family: var(--ds-font-regular); white-space: pre-line; }
+  .assessment-table__row.expanded .intervention-detail { display: flex; }
 
   .table-heading { align-items: center; gap: var(--ds-space-3); padding-inline: var(--ds-space-5); font-family: var(--ds-font-medium);
     font-size: var(--ds-type-xs); border-bottom: var(--ds-border-thin) solid var(--ds-color-border-soft); display: flex; }
@@ -205,8 +208,7 @@
     border-bottom: var(--ds-border-thin) solid var(--ds-color-border-soft); display: flex; background: var(--ds-color-surface);
     font-size: var(--ds-type-xs); line-height: var(--ds-leading-table); }
   .table-cell--chevron { border-left: var(--ds-border-thin) solid var(--ds-color-border-soft); justify-content: center; padding-inline: 0; cursor: pointer; }
-  .table-cell--chevron .icon { transition: transform .2s; }
-  .table-cell--chevron.open .icon { transform: rotate(180deg); }
+  .assessment-table__row.expanded .table-cell--chevron { padding-top: var(--ds-space-4); }
 
   .status-marker { width: var(--ds-space-7); height: var(--ds-space-7); border-radius: var(--ds-radius-round); color: var(--ds-color-surface);
     background: var(--ds-color-avatar); font-family: var(--ds-font-bold); font-size: var(--ds-type-status); flex: none; display: grid; place-items: center; }
@@ -491,39 +493,69 @@
               <div class="table-heading table-heading--spread">Initials <span class="filter-icon"><svg class="icon"><use href="#icon-filter"/></svg></span></div>
             </div>
 
-            <div class="assessment-table__row" role="row" data-detail="CLI confirmed fit to fly, awaiting final transport confirmation from local agent.">
+            <div class="assessment-table__row" role="row">
               <div class="table-cell table-cell--chevron" onclick="toggleRow(this)"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
               <div class="table-cell"><span class="status-marker">M5</span></div>
-              <div class="table-cell">18.08.2026</div><div class="table-cell">14:35</div>
-              <div class="table-cell">Intervention based on Medical Report</div>
+              <div class="table-cell">2026-08-18</div><div class="table-cell">14:35</div>
+              <div class="table-cell">
+                <span class="intervention-title">Intervention based on Medical Report</span>
+                <div class="intervention-detail">
+                  <p style="margin:0;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                  <p style="margin:0;">Date of next intervention: 2026-05-04</p>
+                </div>
+              </div>
               <div class="table-cell"><span class="initials-pill">NKV</span></div>
             </div>
-            <div class="assessment-table__row" role="row" data-detail="TP consultation completed, recommendation pending.">
+            <div class="assessment-table__row" role="row">
               <div class="table-cell table-cell--chevron" onclick="toggleRow(this)"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
               <div class="table-cell"><span class="status-marker">M4</span></div>
-              <div class="table-cell">17.08.2026</div><div class="table-cell">09:20</div>
-              <div class="table-cell">Intervention based on TP consultation</div>
+              <div class="table-cell">2026-08-17</div><div class="table-cell">09:20</div>
+              <div class="table-cell">
+                <span class="intervention-title">Intervention based on TP consultation</span>
+                <div class="intervention-detail">
+                  <p style="margin:0;">TP consultation completed, recommendation pending.</p>
+                  <p style="margin:0;">Date of next intervention: -</p>
+                </div>
+              </div>
               <div class="table-cell"><span class="initials-pill">JHN</span></div>
             </div>
-            <div class="assessment-table__row" role="row" data-detail="CLI informed and agrees to Medical transport plan. Next intervention planned 18.08.2026.">
+            <div class="assessment-table__row" role="row">
               <div class="table-cell table-cell--chevron" onclick="toggleRow(this)"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
               <div class="table-cell"><span class="status-marker">M3</span></div>
-              <div class="table-cell">16.08.2026</div><div class="table-cell">18:45</div>
-              <div class="table-cell">Intervention Discussed with another CD</div>
+              <div class="table-cell">2026-08-16</div><div class="table-cell">18:45</div>
+              <div class="table-cell">
+                <span class="intervention-title">Intervention Discussed with another CD</span>
+                <div class="intervention-detail">
+                  <p style="margin:0;">CLI informed and agrees to Medical transport plan.</p>
+                  <p style="margin:0;">Date of next intervention: 2026-08-18</p>
+                </div>
+              </div>
               <div class="table-cell"><span class="initials-pill">NKV</span></div>
             </div>
-            <div class="assessment-table__row" role="row" data-detail="Answered additional questions from AC regarding transport logistics.">
+            <div class="assessment-table__row" role="row">
               <div class="table-cell table-cell--chevron" onclick="toggleRow(this)"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
               <div class="table-cell"><span class="status-marker">M2</span></div>
-              <div class="table-cell">15.08.2026</div><div class="table-cell">07:10</div>
-              <div class="table-cell">Answering Questions from AC</div>
+              <div class="table-cell">2026-08-15</div><div class="table-cell">07:10</div>
+              <div class="table-cell">
+                <span class="intervention-title">Other</span>
+                <div class="intervention-detail">
+                  <p style="margin:0;">Answered additional questions from AC regarding transport logistics.</p>
+                  <p style="margin:0;">Date of next intervention: -</p>
+                </div>
+              </div>
               <div class="table-cell"><span class="initials-pill">SRN</span></div>
             </div>
-            <div class="assessment-table__row" role="row" data-detail="ESN/ESD informed about CLI's medical history ahead of admission.">
+            <div class="assessment-table__row" role="row">
               <div class="table-cell table-cell--chevron" onclick="toggleRow(this)"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
               <div class="table-cell"><span class="status-marker">M1</span></div>
-              <div class="table-cell">14.08.2026</div><div class="table-cell">22:55</div>
-              <div class="table-cell">ESN/ESD informed about CLI's medical history</div>
+              <div class="table-cell">2026-08-14</div><div class="table-cell">22:55</div>
+              <div class="table-cell">
+                <span class="intervention-title">Intervention based on Medical Report</span>
+                <div class="intervention-detail">
+                  <p style="margin:0;">ESN/ESD informed about CLI's medical history ahead of admission.</p>
+                  <p style="margin:0;">Date of next intervention: -</p>
+                </div>
+              </div>
               <div class="table-cell"><span class="initials-pill">NKV</span></div>
             </div>
           </div>
@@ -731,18 +763,7 @@
 
   function toggleRow(cell) {
     var row = cell.closest('.assessment-table__row');
-    var existing = row.nextElementSibling;
-    cell.classList.toggle('open');
-    if (existing && existing.classList.contains('expanded-detail-row')) {
-      existing.remove();
-      return;
-    }
-    var detailRow = document.createElement('div');
-    detailRow.className = 'assessment-table__row expanded-detail-row';
-    detailRow.style.gridTemplateColumns = '1fr';
-    detailRow.style.height = 'auto';
-    detailRow.innerHTML = '<div class="expanded-detail" style="grid-column:1/-1; margin-left:357px; width:calc(100% - 357px - 108px);">' + row.dataset.detail + '</div>';
-    row.after(detailRow);
+    row.classList.toggle('expanded');
   }
 
   function editScreening(btn) {
