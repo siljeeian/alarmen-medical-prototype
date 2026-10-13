@@ -105,16 +105,18 @@
   .role-toggle-label { font-size: var(--ds-type-xs); color: var(--ds-color-ink-muted); margin-right: var(--ds-space-3); align-self: center; }
 
   .tabs { margin-top: var(--ds-space-5); display: flex; overflow-x: auto; }
-  .tab { padding: var(--ds-space-5) var(--ds-space-7); font-family: var(--ds-font-medium); font-size: var(--ds-type-sm);
-    background: var(--ds-color-tab); border: var(--ds-border-thin) solid var(--ds-color-border); border-bottom: none; white-space: nowrap; }
-  .tab--active { background: var(--ds-color-surface); border-bottom: 2px solid var(--ds-color-ink); font-family: var(--ds-font-bold); }
+  .tab { height: var(--ds-header-row); min-width: var(--ds-space-20); padding-inline: var(--ds-space-7);
+    background: var(--ds-color-tab); border-right: var(--ds-border-thin) solid var(--ds-color-border);
+    font-family: var(--ds-font-regular); font-size: var(--ds-type-sm); white-space: nowrap; place-items: center; display: grid; }
+  .tab--active { border-top: 3px solid var(--ds-color-ink); border-left: var(--ds-border-thin) solid var(--ds-color-border);
+    background: var(--ds-color-surface); font-family: var(--ds-font-medium); }
 
   .workspace { padding-block: var(--ds-space-10) var(--ds-space-20); }
   .workspace__inner { width: min(var(--ds-content-max), calc(100% - var(--ds-space-12))); grid-template-columns: var(--ds-left-column) minmax(0, var(--ds-right-column));
     gap: var(--ds-main-gap); margin-inline: auto; display: grid; }
   .left-column, .right-column { gap: var(--ds-space-7); flex-direction: column; min-width: 0; display: flex; }
 
-  .panel { gap: var(--ds-space-6); padding: var(--ds-space-7); flex-direction: column; display: flex; border-radius: var(--ds-radius-md); }
+  .panel { gap: var(--ds-space-6); padding: var(--ds-space-7); flex-direction: column; display: flex; }
   .panel--blue { background: var(--ds-color-surface-blue); }
   .panel--outline { border: var(--ds-border-thin) solid var(--ds-color-border); background: var(--ds-color-surface); }
 
@@ -159,9 +161,9 @@
   /* Classification select — exact real colors from production CSS */
   .classification-select { width: 100%; position: relative; }
   .classification-select__control {
-    width: 100%; min-height: var(--ds-space-8); border: 2px solid var(--ds-color-border); color: var(--ds-color-ink);
+    width: 100%; min-height: var(--ds-space-14); border: 2px solid var(--ds-color-border); color: var(--ds-color-ink);
     background: var(--ds-color-surface); font-family: var(--ds-font-regular); font-size: var(--ds-type-sm);
-    border-radius: var(--ds-radius-sm); padding: var(--ds-space-4) var(--ds-space-5); appearance: none; cursor: pointer;
+    padding: var(--ds-space-4) var(--ds-space-5); appearance: none; cursor: pointer;
   }
   .classification-select--common-illness .classification-select__control { background: #ffeebd99; }
   .classification-select--serious-cases .classification-select__control { background: #ffd09b; }
@@ -179,8 +181,8 @@
     letter-spacing: var(--ds-space-1); justify-content: space-between; align-items: center; display: flex; border: none; width: 100%; cursor: default; }
   .primary-action .icon { color: var(--ds-color-surface); }
 
-  .assessment { background: var(--ds-color-surface); border: var(--ds-border-thin) solid var(--ds-color-border); border-radius: var(--ds-radius-md); padding: var(--ds-space-7); }
-  .assessment-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--ds-space-5); }
+  .assessment { background: var(--ds-color-surface); border: var(--ds-border-thin) solid var(--ds-color-border); padding: 0; }
+  .assessment-header { display: flex; justify-content: space-between; align-items: center; padding: var(--ds-space-7); border-bottom: var(--ds-border-thin) solid var(--ds-color-border-soft); background: var(--ds-color-surface-blue); }
   .add-btn { display: inline-flex; align-items: center; gap: var(--ds-space-2); background: var(--ds-color-ink); color: var(--ds-color-surface);
     border: none; border-radius: var(--ds-radius-sm); padding: var(--ds-space-3) var(--ds-space-5); font-family: var(--ds-font-medium); font-size: var(--ds-type-xs); }
   .table-scroll { overflow-x: auto; }
@@ -242,20 +244,39 @@
 
   .drawer-backdrop { position: fixed; inset: 0; background: color-mix(in srgb, var(--ds-color-ink) 40%, transparent); display: none; z-index: 50; }
   .drawer-backdrop.open { display: block; }
-  .drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(420px, 100%); background: var(--ds-color-surface);
-    box-shadow: -2px 0 6px 3px rgba(0,0,0,0.1); padding: var(--ds-space-7); overflow-y: auto; border-radius: var(--ds-radius-md) 0 0 var(--ds-radius-md); }
-  .drawer__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--ds-space-6); }
-  .drawer label { display: block; font-family: var(--ds-font-medium); font-size: var(--ds-type-xs); margin: var(--ds-space-4) 0 var(--ds-space-2); }
+  .drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(432px, 100%); background: var(--ds-color-surface);
+    box-shadow: -2px 0 6px 3px rgba(0,0,0,0.1); overflow-y: auto; border-radius: var(--ds-radius-md) 0 0 var(--ds-radius-md); }
+  .drawer__close-row { display: flex; justify-content: flex-end; padding: var(--ds-space-5) var(--ds-space-5) 0; }
+  .drawer__close { border: none; background: none; padding: var(--ds-space-2); }
+  .drawer__form { padding: 0 var(--ds-space-7) var(--ds-space-7); display: flex; flex-direction: column; }
+  .drawer__form h2, .drawer__form .drawer-title { font-family: var(--ds-font-display); font-weight: 400; font-size: var(--ds-type-md); margin: 0 0 var(--ds-space-6); }
+  .drawer label { display: block; font-family: var(--ds-font-medium); font-size: var(--ds-type-xs); margin: 0 0 var(--ds-space-2); }
+  .drawer-field { margin-bottom: var(--ds-space-5); }
   .drawer select, .drawer input, .drawer textarea {
     width: 100%; font-family: var(--ds-font-regular); font-size: var(--ds-type-xs); padding: var(--ds-space-3);
     border: var(--ds-border-thin) solid var(--ds-color-border); border-radius: var(--ds-radius-sm);
   }
+  .date-input-wrap { position: relative; }
+  .date-input-wrap input { padding-right: var(--ds-space-10); }
+  .date-input-wrap .icon { position: absolute; right: var(--ds-space-4); top: 50%; transform: translateY(-50%); pointer-events: none; }
+  .date-row { display: flex; gap: var(--ds-space-5); }
+  .date-row .drawer-field { flex: 1; }
   .drawer__actions { display: flex; gap: var(--ds-space-4); margin-top: var(--ds-space-6); }
-  .drawer__save { background: var(--ds-color-ink); color: var(--ds-color-surface); border: none; border-radius: var(--ds-radius-sm); padding: var(--ds-space-4); flex: 1; font-family: var(--ds-font-medium); }
-  .drawer__cancel { background: var(--ds-color-surface); color: var(--ds-color-ink); border: var(--ds-border-thin) solid var(--ds-color-border); border-radius: var(--ds-radius-sm); padding: var(--ds-space-4); flex: 1; font-family: var(--ds-font-medium); }
-  .doctor-entry { border: var(--ds-border-thin) solid var(--ds-color-border-soft); border-radius: var(--ds-radius-sm); padding: var(--ds-space-4); margin-top: var(--ds-space-4); }
-  .doctor-entry__remove { font-size: var(--ds-type-xs); border: none; border-bottom: 1.5px solid var(--ds-color-error-300); color: var(--ds-color-error-300); padding: 0; margin-top: var(--ds-space-2); }
-  .add-doctor-btn, .add-diagnosis-btn { margin-top: var(--ds-space-5); font-family: var(--ds-font-medium); font-size: var(--ds-type-xs); border: none; border-bottom: 1.5px solid var(--ds-color-ink); padding: 0; align-self: flex-start; }
+  .drawer__save { background: var(--ds-color-ink); color: var(--ds-color-surface); border: none; border-radius: var(--ds-radius-sm); padding: var(--ds-space-4); font-family: var(--ds-font-medium); font-size: var(--ds-type-xs); }
+  .drawer__discard { display: inline-flex; align-items: center; gap: var(--ds-space-2); background: none; color: var(--ds-color-ink); border: none; padding: var(--ds-space-4); font-family: var(--ds-font-medium); font-size: var(--ds-type-xs); }
+  .doctor-entry { border: var(--ds-border-thin) solid var(--ds-color-border-soft); padding: var(--ds-space-4) 0; }
+  .doctor-entry + .doctor-entry { border-top: var(--ds-border-thin) solid var(--ds-color-border-soft); margin-top: var(--ds-space-4); padding-top: var(--ds-space-4); border-left: none; border-right: none; border-bottom: none; }
+  .doctor-entry__remove { font-size: var(--ds-type-xs); border: none; border-bottom: 1.5px solid var(--ds-color-error-300); color: var(--ds-color-error-300); padding: 0; margin-top: var(--ds-space-2); background: none; }
+  .add-doctor-btn, .add-diagnosis-btn { margin-bottom: var(--ds-space-5); font-family: var(--ds-font-medium); font-size: var(--ds-type-xs); border: none; border-bottom: none; padding: 0; align-self: flex-start; display: inline-flex; align-items: center; gap: var(--ds-space-2); background: none; color: var(--ds-color-ink); }
+
+  .drawer-history__toggle { display: inline-flex; align-items: center; gap: var(--ds-space-2); font-family: var(--ds-font-medium); font-size: var(--ds-type-xs); border: none; background: none; padding: 0; margin-bottom: var(--ds-space-5); }
+  .drawer-history__toggle .icon { transition: transform .2s; }
+  .drawer-history__toggle[aria-expanded="true"] .icon { transform: rotate(180deg); }
+  .drawer-history { display: flex; flex-direction: column; gap: var(--ds-space-4); margin-bottom: var(--ds-space-5); }
+  .drawer-history__card { border: var(--ds-border-thin) solid var(--ds-color-border-soft); padding: var(--ds-space-4); }
+  .drawer-history__heading { display: flex; align-items: center; gap: var(--ds-space-2); font-family: var(--ds-font-medium); font-size: var(--ds-type-xs); margin-bottom: var(--ds-space-2); }
+  .drawer-history__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ds-color-ink-muted); }
+  .drawer-history__description { font-size: var(--ds-type-xs); color: var(--ds-color-ink-muted); display: block; margin-bottom: var(--ds-space-3); }
 </style>
 </head>
 <body data-role="AC">
@@ -268,6 +289,8 @@
   <symbol id="icon-arrow-left" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" fill="none" d="M19 12H3.5m0 0 7 7m-7-7 7-7"/></symbol>
   <symbol id="icon-sort" viewBox="0 0 24 24"><path d="M17 16L12 21L7 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M7 8L12 3L17 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
   <symbol id="icon-person" viewBox="0 0 24 24"><path d="M12 9.56757C14.0538 9.56757 15.7188 7.87351 15.7188 5.78378C15.7188 3.69406 14.0538 2 12 2C9.94619 2 8.28125 3.69406 8.28125 5.78378C8.28125 7.87351 9.94619 9.56757 12 9.56757Z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round" fill="none"/><path d="M12 13.8919C8.5211 13.8919 6.49231 15.7121 5.625 16.5946C4.75769 17.4771 3.5 19.4195 3.5 22H20.5C20.5 19.4195 19.4375 17.6757 18.375 16.5946C17.2441 15.444 15.4789 13.8919 12 13.8919Z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="icon-close" viewBox="0 0 24 24"><path d="M19 5L5 19M5 5L19 19" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
+  <symbol id="icon-calendar" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="1" stroke="currentColor" stroke-width="2" fill="none"/><path d="M3 9H21M8 3V7M16 3V7" stroke="currentColor" stroke-width="2" stroke-linecap="round" fill="none"/></symbol>
 </svg>
 
 <div class="top-bar">
@@ -572,48 +595,100 @@
 
 <!-- Drawers -->
 <div class="drawer-backdrop" id="treatment-backdrop">
-  <aside class="drawer" id="treatment-drawer" role="dialog" aria-modal="true">
-    <div class="drawer__header">
-      <h3 class="section-heading">Edit Treatment</h3>
-      <button onclick="closeDrawer('treatment-drawer')" aria-label="Close medical drawer"><svg class="icon" style="width:20px;height:20px;"><use href="#icon-chevron-down"/></svg></button>
+  <aside class="drawer" id="treatment-drawer" role="dialog" aria-modal="true" aria-labelledby="treatment-drawer-title">
+    <div class="drawer__close-row">
+      <button class="drawer__close" onclick="closeDrawer('treatment-drawer')" aria-label="Close edit treatment"><svg class="icon" style="width:20px;height:20px;"><use href="#icon-close"/></svg></button>
     </div>
-    <label for="cause-select">Type of patient</label>
-    <select id="cause-select">
-      <option selected>In-patient</option>
-      <option>Out-patient</option>
-    </select>
-    <label for="admission-date">Date of admission</label>
-    <input type="text" id="admission-date" placeholder="dd.mm.yyyy" value="28.06.2026">
-    <label for="discharge-date">Date of discharge</label>
-    <input type="text" id="discharge-date" placeholder="dd.mm.yyyy">
-    <label for="incident-desc">Description of incident</label>
-    <textarea id="incident-desc" rows="4">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</textarea>
-    <div class="drawer__actions">
-      <button class="drawer__cancel" onclick="closeDrawer('treatment-drawer')">Discard</button>
-      <button class="drawer__save" onclick="closeDrawer('treatment-drawer')">Save</button>
+    <div class="drawer__form">
+      <h2 id="treatment-drawer-title" class="drawer-title">Edit Treatment</h2>
+
+      <div class="drawer-field">
+        <label for="cause-select">Cause</label>
+        <select id="cause-select">
+          <option>Inpatient: Injury</option>
+          <option selected>Inpatient: Illness</option>
+          <option>Outpatient: Injury</option>
+          <option>Outpatient: Illness</option>
+        </select>
+      </div>
+
+      <div class="drawer-field">
+        <label for="incident-desc">Incident description</label>
+        <textarea id="incident-desc" rows="4" placeholder="Placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</textarea>
+      </div>
+
+      <div class="date-row">
+        <div class="drawer-field">
+          <label for="admission-date">Date of admission</label>
+          <div class="date-input-wrap">
+            <input type="text" id="admission-date" placeholder="DD.MM.YYYY" value="28.06.2026">
+            <svg class="icon"><use href="#icon-calendar"/></svg>
+          </div>
+        </div>
+        <div class="drawer-field">
+          <label for="discharge-date">Date of discharge</label>
+          <div class="date-input-wrap">
+            <input type="text" id="discharge-date" placeholder="DD.MM.YYYY">
+            <svg class="icon"><use href="#icon-calendar"/></svg>
+          </div>
+        </div>
+      </div>
+
+      <button class="drawer-history__toggle" aria-expanded="false" onclick="toggleDrawerHistory(this)">
+        <span>View history</span>
+        <svg class="icon"><use href="#icon-chevron-down"/></svg>
+      </button>
+      <div class="drawer-history" id="treatment-drawer-history" style="display:none;">
+        <div class="drawer-history__card">
+          <div class="drawer-history__heading"><span>16.08.2026</span><span class="drawer-history__dot"></span><span>Inpatient: Illness</span></div>
+          <span class="drawer-history__description">Hospitalised with severe head injury</span>
+          <div class="detail-row"><span class="detail-row__label">Date of treatment</span><span>06.07.2026</span></div>
+          <div class="detail-row"><span class="detail-row__label">Date of follow up</span><span>06.08.2026</span></div>
+        </div>
+        <div class="drawer-history__card">
+          <div class="drawer-history__heading"><span>12.07.2026</span><span class="drawer-history__dot"></span><span>Outpatient: Illness</span></div>
+          <span class="drawer-history__description">Follow-up examination</span>
+          <div class="detail-row"><span class="detail-row__label">Date of treatment</span><span>12.07.2026</span></div>
+          <div class="detail-row"><span class="detail-row__label">Date of follow up</span><span>26.07.2026</span></div>
+        </div>
+      </div>
+
+      <div class="drawer__actions">
+        <button class="drawer__save" type="submit" onclick="closeDrawer('treatment-drawer')">Save</button>
+        <button class="drawer__discard" type="button" onclick="closeDrawer('treatment-drawer')"><svg class="icon"><use href="#icon-close"/></svg> Discard</button>
+      </div>
     </div>
   </aside>
 </div>
 
 <div class="drawer-backdrop" id="doctor-backdrop">
-  <aside class="drawer" id="doctor-drawer" role="dialog" aria-modal="true">
-    <div class="drawer__header">
-      <h3 class="section-heading">Edit Doctors</h3>
-      <button onclick="closeDrawer('doctor-drawer')" aria-label="Close medical drawer"><svg class="icon" style="width:20px;height:20px;"><use href="#icon-chevron-down"/></svg></button>
+  <aside class="drawer" id="doctor-drawer" role="dialog" aria-modal="true" aria-labelledby="doctor-drawer-title">
+    <div class="drawer__close-row">
+      <button class="drawer__close" onclick="closeDrawer('doctor-drawer')" aria-label="Close add doctors"><svg class="icon" style="width:20px;height:20px;"><use href="#icon-close"/></svg></button>
     </div>
-    <div id="doctor-entries">
-      <div class="doctor-entry">
-        <label>Assign doctor *</label>
-        <input type="text" placeholder="Search doctors...">
-        <label>Involvement in the case</label>
-        <span style="font-size:12px;color:var(--ds-color-ink-muted);">Describe this doctor's role in the case</span>
-        <textarea rows="3" placeholder="Describe involvement..."></textarea>
+    <div class="drawer__form">
+      <span id="doctor-drawer-title" class="drawer-title">Add Doctors</span>
+
+      <button class="add-doctor-btn" onclick="addDoctorEntry()"><svg class="icon"><use href="#icon-add"/></svg> Add another doctor</button>
+
+      <div id="doctor-entries">
+        <div class="doctor-entry">
+          <div class="drawer-field">
+            <label>Assign doctor *</label>
+            <input type="text" placeholder="Search doctors...">
+          </div>
+          <div class="drawer-field">
+            <label>Involvement in the case</label>
+            <span style="font-size:12px; color:var(--ds-color-ink-muted); display:block; margin-bottom:var(--ds-space-2);">Describe this doctor's role in the case</span>
+            <textarea rows="3" placeholder="Describe involvement..."></textarea>
+          </div>
+        </div>
       </div>
-    </div>
-    <button class="add-doctor-btn" onclick="addDoctorEntry()">+ Add another Contact Doctor</button>
-    <div class="drawer__actions">
-      <button class="drawer__cancel" onclick="closeDrawer('doctor-drawer')">Discard</button>
-      <button class="drawer__save" onclick="closeDrawer('doctor-drawer')">Save</button>
+
+      <div class="drawer__actions">
+        <button class="drawer__save" type="submit" onclick="closeDrawer('doctor-drawer')">Save</button>
+        <button class="drawer__discard" type="button" onclick="closeDrawer('doctor-drawer')"><svg class="icon"><use href="#icon-close"/></svg> Discard</button>
+      </div>
     </div>
   </aside>
 </div>
@@ -688,14 +763,23 @@
     });
   }
 
+  function toggleDrawerHistory(btn) {
+    var history = document.getElementById('treatment-drawer-history');
+    var isOpen = history.style.display !== 'none';
+    history.style.display = isOpen ? 'none' : 'flex';
+    btn.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+  }
+
   function addDoctorEntry() {
     var container = document.getElementById('doctor-entries');
     var entry = document.createElement('div');
     entry.className = 'doctor-entry';
-    entry.innerHTML = '<label>Name &amp; Type</label><input type="text" placeholder="e.g. Jason Peterson - Cardiologist">' +
-      '<label>Involvement in the case</label><textarea rows="3" placeholder="Describe involvement..."></textarea>' +
+    entry.innerHTML = '<div class="drawer-field"><label>Assign doctor *</label><input type="text" placeholder="Search doctors..."></div>' +
+      '<div class="drawer-field"><label>Involvement in the case</label>' +
+      '<span style="font-size:12px;color:var(--ds-color-ink-muted);display:block;margin-bottom:var(--ds-space-2);">Describe this doctor\'s role in the case</span>' +
+      '<textarea rows="3" placeholder="Describe involvement..."></textarea></div>' +
       '<button class="doctor-entry__remove" onclick="this.parentElement.remove()">Remove</button>';
-    container.appendChild(entry);
+    container.insertBefore(entry, container.firstChild);
   }
 </script>
 
