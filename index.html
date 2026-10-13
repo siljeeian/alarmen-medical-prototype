@@ -193,6 +193,7 @@
   .assessment-table__row.expanded { height: auto; align-items: start; background: var(--ds-color-surface-blue); }
   .assessment-table__row.expanded .table-cell { align-self: start; padding-top: var(--ds-space-4); padding-bottom: var(--ds-space-4); }
   .intervention-title { font-family: var(--ds-font-medium); }
+  .table-cell--intervention { flex-direction: column; align-items: flex-start; justify-content: center; }
   .intervention-detail { display: none; flex-direction: column; gap: var(--ds-space-5); margin-top: var(--ds-space-5); font-family: var(--ds-font-regular); white-space: pre-line; }
   .assessment-table__row.expanded .intervention-detail { display: flex; }
 
@@ -478,7 +479,7 @@
 
       <section class="assessment" data-editable-by="CD">
         <div class="assessment-header">
-          <h3 class="section-heading" style="font-size: var(--ds-type-page);">Interventions &amp; Transport Assessment</h3>
+          <h3 class="section-heading">Interventions &amp; Transport Assessment</h3>
           <button class="add-btn edit-action"><svg class="icon" style="width:20px;height:20px;"><use href="#icon-add"/></svg> Add Intervention</button>
           <span class="role-badge" style="display:none;"><svg class="icon"><use href="#icon-lock"/></svg> CD Only</span>
         </div>
@@ -497,7 +498,7 @@
               <div class="table-cell table-cell--chevron" onclick="toggleRow(this)"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
               <div class="table-cell"><span class="status-marker">M5</span></div>
               <div class="table-cell">2026-08-18</div><div class="table-cell">14:35</div>
-              <div class="table-cell">
+              <div class="table-cell table-cell--intervention">
                 <span class="intervention-title">Intervention based on Medical Report</span>
                 <div class="intervention-detail">
                   <p style="margin:0;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
@@ -510,7 +511,7 @@
               <div class="table-cell table-cell--chevron" onclick="toggleRow(this)"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
               <div class="table-cell"><span class="status-marker">M4</span></div>
               <div class="table-cell">2026-08-17</div><div class="table-cell">09:20</div>
-              <div class="table-cell">
+              <div class="table-cell table-cell--intervention">
                 <span class="intervention-title">Intervention based on TP consultation</span>
                 <div class="intervention-detail">
                   <p style="margin:0;">TP consultation completed, recommendation pending.</p>
@@ -523,7 +524,7 @@
               <div class="table-cell table-cell--chevron" onclick="toggleRow(this)"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
               <div class="table-cell"><span class="status-marker">M3</span></div>
               <div class="table-cell">2026-08-16</div><div class="table-cell">18:45</div>
-              <div class="table-cell">
+              <div class="table-cell table-cell--intervention">
                 <span class="intervention-title">Intervention Discussed with another CD</span>
                 <div class="intervention-detail">
                   <p style="margin:0;">CLI informed and agrees to Medical transport plan.</p>
@@ -536,7 +537,7 @@
               <div class="table-cell table-cell--chevron" onclick="toggleRow(this)"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
               <div class="table-cell"><span class="status-marker">M2</span></div>
               <div class="table-cell">2026-08-15</div><div class="table-cell">07:10</div>
-              <div class="table-cell">
+              <div class="table-cell table-cell--intervention">
                 <span class="intervention-title">Other</span>
                 <div class="intervention-detail">
                   <p style="margin:0;">Answered additional questions from AC regarding transport logistics.</p>
@@ -549,7 +550,7 @@
               <div class="table-cell table-cell--chevron" onclick="toggleRow(this)"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
               <div class="table-cell"><span class="status-marker">M1</span></div>
               <div class="table-cell">2026-08-14</div><div class="table-cell">22:55</div>
-              <div class="table-cell">
+              <div class="table-cell table-cell--intervention">
                 <span class="intervention-title">Intervention based on Medical Report</span>
                 <div class="intervention-detail">
                   <p style="margin:0;">ESN/ESD informed about CLI's medical history ahead of admission.</p>
