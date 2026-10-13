@@ -185,17 +185,18 @@
   .assessment-header { display: flex; justify-content: space-between; align-items: center; padding: var(--ds-space-7); background: var(--ds-color-surface-blue); }
   .add-btn { display: inline-flex; align-items: center; gap: var(--ds-space-2); background: var(--ds-color-ink); color: var(--ds-color-surface);
     border: none; border-radius: var(--ds-radius-sm); padding: var(--ds-space-4) var(--ds-space-5); font-family: var(--ds-font-medium); font-size: var(--ds-type-md); }
-  .table-scroll { overflow-x: auto; }
+  .table-scroll { overflow-x: auto; border: var(--ds-border-thin) solid var(--ds-color-border-soft); border-bottom: none; }
   .assessment-table { width: 100%; min-width: var(--ds-right-column); }
-  .assessment-table__header, .assessment-table__row { grid-template-columns: 48px 105px 109px 95px 455px 108px; display: grid; }
+  .assessment-table__header, .assessment-table__row { grid-template-columns: 48px 14fr 16fr 12fr 44fr 14fr; display: grid; }
   .assessment-table__header { height: var(--ds-table-heading); background: var(--ds-color-surface-blue); }
   .assessment-table__row { height: var(--ds-table-row-default); align-items: center; }
-  .assessment-table__row.expanded { height: auto; align-items: start; background: var(--ds-color-surface-blue); }
-  .assessment-table__row.expanded .table-cell { align-self: start; padding-top: var(--ds-space-4); padding-bottom: var(--ds-space-4); }
-  .intervention-title { font-family: var(--ds-font-medium); }
-  .table-cell--intervention { flex-direction: column; align-items: flex-start; justify-content: center; }
-  .intervention-detail { display: none; flex-direction: column; gap: var(--ds-space-5); margin-top: var(--ds-space-5); font-family: var(--ds-font-regular); white-space: pre-line; }
-  .assessment-table__row.expanded .intervention-detail { display: flex; }
+  .assessment-table__row.tinted, .assessment-table__expand.tinted { background: color-mix(in srgb, var(--ds-color-surface-blue) 50%, white); }
+  .assessment-table__row.tinted { border-bottom: none; }
+  .intervention-title { font-family: var(--ds-font-medium); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block; }
+
+  .assessment-table__expand { display: none; border-bottom: var(--ds-border-thin) solid var(--ds-color-border-soft); background: var(--ds-color-surface); }
+  .assessment-table__expand.open { display: block; padding: var(--ds-space-5) var(--ds-space-5); }
+  .assessment-table__expand-inner { width: 44%; margin-inline-start: 46%; display: flex; flex-direction: column; gap: var(--ds-space-4); font-size: var(--ds-type-xs); }
 
   .table-heading { align-items: center; gap: var(--ds-space-3); padding-inline: var(--ds-space-5); font-family: var(--ds-font-medium);
     font-size: var(--ds-type-xs); border-bottom: var(--ds-border-thin) solid var(--ds-color-border-soft); display: flex; }
@@ -206,7 +207,7 @@
   .sort-icon .icon, .filter-icon .icon { color: var(--ds-color-ink-muted); }
 
   .table-cell { align-items: center; gap: var(--ds-space-3); padding-inline: var(--ds-space-5);
-    border-bottom: var(--ds-border-thin) solid var(--ds-color-border-soft); display: flex; background: var(--ds-color-surface);
+    border-bottom: var(--ds-border-thin) solid var(--ds-color-border-soft); display: flex; overflow: hidden;
     font-size: var(--ds-type-xs); line-height: var(--ds-leading-table); }
   .table-cell--chevron { border-left: var(--ds-border-thin) solid var(--ds-color-border-soft); justify-content: center; padding-inline: 0; cursor: pointer; }
   .assessment-table__row.expanded .table-cell--chevron { padding-top: var(--ds-space-4); }
@@ -494,70 +495,74 @@
               <div class="table-heading table-heading--spread">Initials <span class="filter-icon"><svg class="icon"><use href="#icon-filter"/></svg></span></div>
             </div>
 
-            <div class="assessment-table__row" role="row">
-              <div class="table-cell table-cell--chevron" onclick="toggleRow(this)"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
+            <div class="assessment-table__row" id="row-5" role="row">
+              <div class="table-cell table-cell--chevron" onclick="toggleRow('5')"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
               <div class="table-cell"><span class="status-marker">M5</span></div>
               <div class="table-cell">2026-08-18</div><div class="table-cell">14:35</div>
-              <div class="table-cell table-cell--intervention">
-                <span class="intervention-title">Intervention based on Medical Report</span>
-                <div class="intervention-detail">
-                  <p style="margin:0;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                  <p style="margin:0;">Date of next intervention: 2026-05-04</p>
-                </div>
-              </div>
+              <div class="table-cell"><span class="intervention-title">Intervention based on Medical Report</span></div>
               <div class="table-cell"><span class="initials-pill">NKV</span></div>
             </div>
-            <div class="assessment-table__row" role="row">
-              <div class="table-cell table-cell--chevron" onclick="toggleRow(this)"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
+            <div class="assessment-table__expand" id="expand-5">
+              <div class="assessment-table__expand-inner">
+                <p style="margin:0;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                <p style="margin:0;">Date of next intervention: 2026-05-04</p>
+              </div>
+            </div>
+
+            <div class="assessment-table__row" id="row-4" role="row">
+              <div class="table-cell table-cell--chevron" onclick="toggleRow('4')"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
               <div class="table-cell"><span class="status-marker">M4</span></div>
               <div class="table-cell">2026-08-17</div><div class="table-cell">09:20</div>
-              <div class="table-cell table-cell--intervention">
-                <span class="intervention-title">Intervention based on TP consultation</span>
-                <div class="intervention-detail">
-                  <p style="margin:0;">TP consultation completed, recommendation pending.</p>
-                  <p style="margin:0;">Date of next intervention: -</p>
-                </div>
-              </div>
+              <div class="table-cell"><span class="intervention-title">Intervention based on TP consultation</span></div>
               <div class="table-cell"><span class="initials-pill">JHN</span></div>
             </div>
-            <div class="assessment-table__row" role="row">
-              <div class="table-cell table-cell--chevron" onclick="toggleRow(this)"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
+            <div class="assessment-table__expand" id="expand-4">
+              <div class="assessment-table__expand-inner">
+                <p style="margin:0;">TP consultation completed, recommendation pending.</p>
+                <p style="margin:0;">Date of next intervention: -</p>
+              </div>
+            </div>
+
+            <div class="assessment-table__row" id="row-3" role="row">
+              <div class="table-cell table-cell--chevron" onclick="toggleRow('3')"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
               <div class="table-cell"><span class="status-marker">M3</span></div>
               <div class="table-cell">2026-08-16</div><div class="table-cell">18:45</div>
-              <div class="table-cell table-cell--intervention">
-                <span class="intervention-title">Intervention Discussed with another CD</span>
-                <div class="intervention-detail">
-                  <p style="margin:0;">CLI informed and agrees to Medical transport plan.</p>
-                  <p style="margin:0;">Date of next intervention: 2026-08-18</p>
-                </div>
-              </div>
+              <div class="table-cell"><span class="intervention-title">CLI informed and agrees to Medical transport plan</span></div>
               <div class="table-cell"><span class="initials-pill">NKV</span></div>
             </div>
-            <div class="assessment-table__row" role="row">
-              <div class="table-cell table-cell--chevron" onclick="toggleRow(this)"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
+            <div class="assessment-table__expand" id="expand-3">
+              <div class="assessment-table__expand-inner">
+                <p style="margin:0;">CLI informed and agrees to Medical transport plan.</p>
+                <p style="margin:0;">Date of next intervention: 2026-08-18</p>
+              </div>
+            </div>
+
+            <div class="assessment-table__row" id="row-2" role="row">
+              <div class="table-cell table-cell--chevron" onclick="toggleRow('2')"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
               <div class="table-cell"><span class="status-marker">M2</span></div>
               <div class="table-cell">2026-08-15</div><div class="table-cell">07:10</div>
-              <div class="table-cell table-cell--intervention">
-                <span class="intervention-title">Other</span>
-                <div class="intervention-detail">
-                  <p style="margin:0;">Answered additional questions from AC regarding transport logistics.</p>
-                  <p style="margin:0;">Date of next intervention: -</p>
-                </div>
-              </div>
+              <div class="table-cell"><span class="intervention-title">Other</span></div>
               <div class="table-cell"><span class="initials-pill">SRN</span></div>
             </div>
-            <div class="assessment-table__row" role="row">
-              <div class="table-cell table-cell--chevron" onclick="toggleRow(this)"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
+            <div class="assessment-table__expand" id="expand-2">
+              <div class="assessment-table__expand-inner">
+                <p style="margin:0;">Answered additional questions from AC regarding transport logistics.</p>
+                <p style="margin:0;">Date of next intervention: -</p>
+              </div>
+            </div>
+
+            <div class="assessment-table__row" id="row-1" role="row">
+              <div class="table-cell table-cell--chevron" onclick="toggleRow('1')"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
               <div class="table-cell"><span class="status-marker">M1</span></div>
               <div class="table-cell">2026-08-14</div><div class="table-cell">22:55</div>
-              <div class="table-cell table-cell--intervention">
-                <span class="intervention-title">Intervention based on Medical Report</span>
-                <div class="intervention-detail">
-                  <p style="margin:0;">ESN/ESD informed about CLI's medical history ahead of admission.</p>
-                  <p style="margin:0;">Date of next intervention: -</p>
-                </div>
-              </div>
+              <div class="table-cell"><span class="intervention-title">Intervention based on Medical Report</span></div>
               <div class="table-cell"><span class="initials-pill">NKV</span></div>
+            </div>
+            <div class="assessment-table__expand" id="expand-1">
+              <div class="assessment-table__expand-inner">
+                <p style="margin:0;">ESN/ESD informed about CLI's medical history ahead of admission.</p>
+                <p style="margin:0;">Date of next intervention: -</p>
+              </div>
             </div>
           </div>
         </div>
@@ -762,9 +767,12 @@
     document.getElementById('classification-wrapper').className = 'classification-select classification-select--' + select.value;
   }
 
-  function toggleRow(cell) {
-    var row = cell.closest('.assessment-table__row');
-    row.classList.toggle('expanded');
+  function toggleRow(id) {
+    var row = document.getElementById('row-' + id);
+    var expand = document.getElementById('expand-' + id);
+    var isOpen = expand.classList.toggle('open');
+    row.classList.toggle('tinted', isOpen);
+    expand.classList.toggle('tinted', isOpen);
   }
 
   function editScreening(btn) {
