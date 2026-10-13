@@ -23,29 +23,19 @@
     --builders-color-blue-600: #262C52;
     --builders-color-blue-700: #090C33;
     --builders-color-purple-700: #6325E7;
-    --builders-color-success-100: #D4F7E6;
-    --builders-color-success-300: #00593E;
-    --builders-color-warn-100: #FFEEBD;
-    --builders-color-warn-200: #F8C947;
     --builders-color-error-100: #FFE2E2;
-    --builders-color-error-200: #FA5A62;
     --builders-color-error-300: #8C0008;
 
-    --ds-color-canvas: var(--builders-color-white);
+    --ds-color-ink: var(--builders-color-blue-700);
+    --ds-color-ink-muted: var(--builders-color-blue-500);
     --ds-color-surface: var(--builders-color-white);
     --ds-color-surface-blue: var(--builders-color-blue-100);
     --ds-color-tab: var(--builders-color-blue-200);
     --ds-color-border: var(--builders-color-blue-300);
     --ds-color-border-soft: var(--builders-color-blue-200);
-    --ds-color-ink: var(--builders-color-blue-700);
-    --ds-color-ink-muted: var(--builders-color-blue-500);
     --ds-color-header-border: var(--builders-color-blue-600);
     --ds-color-avatar: var(--builders-color-purple-700);
     --ds-color-danger-soft: var(--builders-color-error-100);
-
-    --ds-color-classification-ordinary: color-mix(in srgb, var(--builders-color-warn-100) 60%, white);
-    --ds-color-classification-serious: color-mix(in srgb, var(--builders-color-warn-100) 75%, var(--builders-color-warn-200));
-    --ds-color-classification-life-threatening: color-mix(in srgb, var(--builders-color-error-200) 50%, white);
 
     --ds-font-display: 'GjensidigeDisplay', sans-serif;
     --ds-font-regular: 'GjensidigeSans', sans-serif;
@@ -67,7 +57,7 @@
     --ds-radius-md: 8px;
     --ds-radius-round: 999px;
 
-    --ds-type-xs: 14px; --ds-type-sm: 16px; --ds-type-md: 20px; --ds-type-lg: 24px; --ds-type-page: 32px; --ds-type-status: 10px;
+    --ds-type-xs: 14px; --ds-type-sm: 16px; --ds-type-md: 20px; --ds-type-page: 32px; --ds-type-status: 10px;
     --ds-leading-body: 1.5; --ds-leading-display: 1.2; --ds-leading-heading: 1.3; --ds-leading-table: 20px;
 
     --ds-table-heading: var(--ds-space-10);
@@ -76,12 +66,10 @@
 
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
-  body { font-family: var(--ds-font-regular); background: var(--ds-color-canvas); color: var(--ds-color-ink); }
+  body { font-family: var(--ds-font-regular); background: var(--ds-color-surface); color: var(--ds-color-ink); }
   button { font: inherit; color: inherit; cursor: pointer; background: none; }
   .icon { width: 16px; height: 16px; flex-shrink: 0; display: inline-block; vertical-align: middle; }
   .icon svg { width: 100%; height: 100%; display: block; }
-
-  .app-shell { background: var(--ds-color-canvas); min-height: 100dvh; }
 
   .top-bar { height: var(--ds-header-row); align-items: center; display: flex; justify-content: space-between;
     color: var(--ds-color-surface); background: var(--ds-color-ink);
@@ -92,29 +80,33 @@
   .app-name { font-family: var(--ds-font-medium); font-size: var(--ds-type-sm); }
   .profile { display: flex; align-items: center; gap: var(--ds-space-3); }
   .avatar { width: 32px; height: 32px; border-radius: var(--ds-radius-round); background: var(--ds-color-avatar);
-    color: var(--ds-color-surface); display: grid; place-items: center; font-family: var(--ds-font-medium); font-size: var(--ds-type-xs); }
+    color: var(--ds-color-surface); display: grid; place-items: center; }
   .profile-name { color: var(--ds-color-surface); font-size: var(--ds-type-sm); font-family: var(--ds-font-medium); }
   .profile .icon { color: var(--ds-color-surface); }
 
   .navigation { height: var(--ds-header-row); align-items: center; display: flex; padding-inline: var(--ds-space-7);
     background: var(--ds-color-surface-blue); border-bottom: var(--ds-border-thin) solid var(--ds-color-border-soft); overflow-x: auto; }
-  .navigation__item { padding: var(--ds-space-7); font-size: var(--ds-type-sm); font-family: var(--ds-font-regular); white-space: nowrap; }
+  .navigation__item { padding: var(--ds-space-7); font-size: var(--ds-type-sm); white-space: nowrap; }
 
   .case-header { background: var(--ds-color-surface-blue); border-bottom: var(--ds-border-thin) solid var(--ds-color-border-soft); }
   .case-header__inner { width: min(var(--ds-content-max), calc(100% - var(--ds-space-12))); padding-block: var(--ds-space-7); margin-inline: auto; }
-  .case-title { gap: var(--ds-space-2); margin-top: var(--ds-space-5); flex-direction: column; display: flex; }
-  .case-title__line { align-items: center; gap: var(--ds-space-5); display: flex; }
-  .page-heading { font-family: var(--ds-font-display); font-weight: 400; font-size: var(--ds-type-page); line-height: var(--ds-leading-display); margin: 0; color: var(--ds-color-ink); }
-  .case-number { font-size: var(--ds-type-md); font-family: var(--ds-font-regular); margin: 0; color: var(--ds-color-ink); }
+  .case-title-row { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--ds-space-5); margin-top: var(--ds-space-5); flex-wrap: wrap; }
+  .page-heading { font-family: var(--ds-font-display); font-weight: 400; font-size: var(--ds-type-page); line-height: var(--ds-leading-display); margin: 0; }
+  .case-number { font-size: var(--ds-type-md); margin: var(--ds-space-2) 0 0; }
 
   .back-link { display: inline-flex; align-items: center; gap: var(--ds-space-2); font-family: var(--ds-font-medium);
     font-size: var(--ds-type-sm); letter-spacing: var(--ds-space-1); border: none; border-bottom: 1.5px solid var(--ds-color-ink);
-    padding: 0 0 2px; color: var(--ds-color-ink); }
-  .back-link .icon { width: 16px; height: 16px; }
+    padding: 0 0 2px; }
+
+  /* Role preview toggle — matches real dev/test-only feature */
+  .role-toggle { display: inline-flex; border: 1px solid var(--ds-color-ink); border-radius: var(--ds-radius-sm); overflow: hidden; background: var(--ds-color-surface); }
+  .role-toggle button { padding: var(--ds-space-2) var(--ds-space-5); font-family: var(--ds-font-medium); font-size: var(--ds-type-xs); border: none; }
+  .role-toggle button.active { background: var(--ds-color-ink); color: var(--ds-color-surface); }
+  .role-toggle-label { font-size: var(--ds-type-xs); color: var(--ds-color-ink-muted); margin-right: var(--ds-space-3); align-self: center; }
 
   .tabs { margin-top: var(--ds-space-5); display: flex; overflow-x: auto; }
   .tab { padding: var(--ds-space-5) var(--ds-space-7); font-family: var(--ds-font-medium); font-size: var(--ds-type-sm);
-    background: var(--ds-color-tab); border: var(--ds-border-thin) solid var(--ds-color-border); border-bottom: none; white-space: nowrap; color: var(--ds-color-ink); }
+    background: var(--ds-color-tab); border: var(--ds-border-thin) solid var(--ds-color-border); border-bottom: none; white-space: nowrap; }
   .tab--active { background: var(--ds-color-surface); border-bottom: 2px solid var(--ds-color-ink); font-family: var(--ds-font-bold); }
 
   .workspace { padding-block: var(--ds-space-10) var(--ds-space-20); }
@@ -127,53 +119,59 @@
   .panel--outline { border: var(--ds-border-thin) solid var(--ds-color-border); background: var(--ds-color-surface); }
 
   .panel-title { justify-content: space-between; align-items: flex-start; display: flex; }
-  .section-heading { font-family: var(--ds-font-display); font-weight: 400; font-size: var(--ds-type-md); line-height: var(--ds-leading-heading); margin: 0; color: var(--ds-color-ink); }
-  .subheading { font-family: var(--ds-font-display); font-weight: 400; font-size: var(--ds-type-sm); margin: 0 0 var(--ds-space-3) 0; color: var(--ds-color-ink); }
+  .section-heading { font-family: var(--ds-font-display); font-weight: 400; font-size: var(--ds-type-md); line-height: var(--ds-leading-heading); margin: 0; }
+  .subheading { font-family: var(--ds-font-display); font-weight: 400; font-size: var(--ds-type-sm); margin: 0 0 var(--ds-space-3) 0; }
 
   .edit-link { display: inline-flex; align-items: center; gap: var(--ds-space-2); font-family: var(--ds-font-medium);
-    font-size: var(--ds-type-sm); letter-spacing: var(--ds-space-1); border: none; padding: 0; border-bottom: 1.5px solid var(--ds-color-ink); color: var(--ds-color-ink); }
+    font-size: var(--ds-type-sm); letter-spacing: var(--ds-space-1); border: none; padding: 0; border-bottom: 1.5px solid var(--ds-color-ink); }
+
+  /* role-gated section action: swap between Edit button and "X Only" badge based on current preview role */
+  [data-editable-by] .edit-action,
+  [data-editable-by] .role-badge { display: none; }
+  body[data-role="AC"] [data-editable-by="AC"] .edit-action,
+  body[data-role="CD"] [data-editable-by="CD"] .edit-action { display: inline-flex; }
+  body[data-role="AC"] [data-editable-by="CD"] .role-badge,
+  body[data-role="CD"] [data-editable-by="AC"] .role-badge { display: inline-flex; }
 
   .history-link { align-items: center; gap: var(--ds-space-1); font-family: var(--ds-font-medium); font-size: var(--ds-type-xs);
-    letter-spacing: var(--ds-space-1); border-radius: var(--ds-radius-sm); display: inline-flex; border: none;
-    border-bottom: 1.5px solid var(--ds-color-ink); align-self: flex-start; margin-top: var(--ds-space-3); padding: 0; color: var(--ds-color-ink); }
+    letter-spacing: var(--ds-space-1); display: inline-flex; border: none; border-bottom: 1.5px solid var(--ds-color-ink);
+    align-self: flex-start; margin-top: var(--ds-space-3); padding: 0; }
   .history-link .icon { transition: transform .2s; }
   .history-link[aria-expanded="true"] .icon { transform: rotate(180deg); }
 
   .history-cards { display: none; flex-direction: column; gap: var(--ds-space-4); margin-top: var(--ds-space-4); }
   .history-cards.open { display: flex; }
   .history-card { background: var(--ds-color-surface); border: var(--ds-border-thin) solid var(--ds-color-border); border-radius: var(--ds-radius-sm); padding: var(--ds-space-5); }
-  .history-card__date { font-family: var(--ds-font-medium); font-size: var(--ds-type-xs); margin-bottom: var(--ds-space-2); }
+  .history-card__date { display: flex; align-items: center; gap: var(--ds-space-2); font-family: var(--ds-font-medium); font-size: var(--ds-type-xs); color: var(--ds-color-ink-muted); margin-bottom: var(--ds-space-2); }
+  .history-card__dot { width: 8px; height: 8px; border-radius: 50%; background: var(--ds-color-ink-muted); }
 
   .detail-list { display: flex; flex-direction: column; gap: var(--ds-space-2); }
   .detail-row { padding-block: var(--ds-space-2); grid-template-columns: 175px minmax(0, 1fr); gap: var(--ds-space-5);
     font-size: var(--ds-type-xs); line-height: var(--ds-leading-body); display: grid; }
   .detail-row__label { font-family: var(--ds-font-medium); }
-  .detail-row__value { font-family: var(--ds-font-regular); }
 
   .divider { height: var(--ds-border-thin); background: color-mix(in srgb, var(--ds-color-ink) 15%, transparent); border: none; margin: var(--ds-space-2) 0; }
 
-  .privacy-badge { height: var(--ds-space-8); align-items: center; gap: var(--ds-space-2); padding-inline: var(--ds-space-4);
+  .role-badge { align-items: center; gap: var(--ds-space-2); padding-inline: var(--ds-space-4); height: var(--ds-space-8);
     border-radius: var(--ds-radius-round); color: var(--ds-color-surface); background: var(--ds-color-ink-muted);
-    font-family: var(--ds-font-medium); font-size: var(--ds-type-xs); white-space: nowrap; display: inline-flex; }
-  .privacy-badge .icon { color: var(--ds-color-surface); }
+    font-family: var(--ds-font-medium); font-size: var(--ds-type-xs); white-space: nowrap; }
 
-  .classification-select { width: 100%; display: block; position: relative; }
+  /* Classification select — exact real colors from production CSS */
+  .classification-select { width: 100%; position: relative; }
   .classification-select__control {
     width: 100%; min-height: var(--ds-space-8); border: 2px solid var(--ds-color-border); color: var(--ds-color-ink);
     background: var(--ds-color-surface); font-family: var(--ds-font-regular); font-size: var(--ds-type-sm);
-    line-height: var(--ds-leading-body); border-radius: var(--ds-radius-sm); padding: var(--ds-space-4) var(--ds-space-5);
-    appearance: none; -webkit-appearance: none; cursor: pointer;
+    border-radius: var(--ds-radius-sm); padding: var(--ds-space-4) var(--ds-space-5); appearance: none; cursor: pointer;
   }
-  .classification-select__chevron { position: absolute; right: var(--ds-space-5); top: 50%; transform: translateY(-50%); pointer-events: none; }
-  .classification-select--ordinary-illness .classification-select__control { background: var(--ds-color-classification-ordinary); }
-  .classification-select--serious-cases .classification-select__control { background: var(--ds-color-classification-serious); }
-  .classification-select--life-threatening-cases .classification-select__control { background: var(--ds-color-classification-life-threatening); }
+  .classification-select--common-illness .classification-select__control { background: #ffeebd99; }
+  .classification-select--serious-cases .classification-select__control { background: #ffd09b; }
+  .classification-select--life-threatening-cases .classification-select__control { background: #fa5a6280; }
 
   .risk-list { display: flex; flex-direction: column; gap: var(--ds-space-2); }
-  .risk-row { min-height: var(--ds-space-8); justify-content: space-between; align-items: flex-start; gap: var(--ds-space-5);
-    padding: var(--ds-space-3); font-size: var(--ds-type-xs); line-height: var(--ds-leading-body); display: flex; border-radius: var(--ds-radius-sm); color: var(--ds-color-ink); }
+  .risk-row { justify-content: space-between; align-items: flex-start; gap: var(--ds-space-5);
+    padding: var(--ds-space-3); font-size: var(--ds-type-xs); display: flex; border-radius: var(--ds-radius-sm); }
   .risk-row > :first-child { font-family: var(--ds-font-medium); }
-  .risk-row > :last-child { width: var(--ds-space-7); font-family: var(--ds-font-regular); flex: none; text-align: right; }
+  .risk-row > :last-child { font-family: var(--ds-font-regular); flex: none; text-align: right; }
   .risk-row--alert { background: var(--ds-color-danger-soft); }
 
   .primary-action { min-height: var(--ds-header-row); padding: var(--ds-space-4) var(--ds-space-5); border-radius: var(--ds-radius-sm);
@@ -182,64 +180,71 @@
   .primary-action .icon { color: var(--ds-color-surface); }
 
   .assessment { background: var(--ds-color-surface); border: var(--ds-border-thin) solid var(--ds-color-border); border-radius: var(--ds-radius-md); padding: var(--ds-space-7); }
-  .assessment__title { margin: 0 0 var(--ds-space-5) 0; }
+  .assessment-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--ds-space-5); }
+  .add-btn { display: inline-flex; align-items: center; gap: var(--ds-space-2); background: var(--ds-color-ink); color: var(--ds-color-surface);
+    border: none; border-radius: var(--ds-radius-sm); padding: var(--ds-space-3) var(--ds-space-5); font-family: var(--ds-font-medium); font-size: var(--ds-type-xs); }
   .table-scroll { overflow-x: auto; }
   .assessment-table { width: 100%; min-width: var(--ds-right-column); }
   .assessment-table__header, .assessment-table__row { grid-template-columns: 48px 105px 109px 95px 1fr 160px; display: grid; }
   .assessment-table__header { height: var(--ds-table-heading); background: var(--ds-color-surface-blue); }
   .assessment-table__row { height: var(--ds-table-row-default); }
+  .assessment-table__row.expanded { height: auto; }
+  .expanded-detail { grid-column: 5 / 6; padding: var(--ds-space-4) var(--ds-space-5); font-size: var(--ds-type-xs); border-bottom: var(--ds-border-thin) solid var(--ds-color-border-soft); }
 
   .table-heading { align-items: center; gap: var(--ds-space-3); padding-inline: var(--ds-space-5); font-family: var(--ds-font-medium);
-    font-size: var(--ds-type-xs); border-bottom: var(--ds-border-thin) solid var(--ds-color-border-soft); display: flex; color: var(--ds-color-ink); }
+    font-size: var(--ds-type-xs); border-bottom: var(--ds-border-thin) solid var(--ds-color-border-soft); display: flex; }
   .table-heading--empty { padding-inline: 0; }
-  .table-heading .icon { cursor: pointer; }
 
   .table-cell { align-items: center; gap: var(--ds-space-3); padding-inline: var(--ds-space-5);
     border-bottom: var(--ds-border-thin) solid var(--ds-color-border-soft); display: flex; background: var(--ds-color-surface);
-    font-family: var(--ds-font-regular); font-size: var(--ds-type-xs); line-height: var(--ds-leading-table); color: var(--ds-color-ink); }
-  .table-cell--chevron { border-left: var(--ds-border-thin) solid var(--ds-color-border-soft); justify-content: center; padding-inline: 0; }
+    font-size: var(--ds-type-xs); line-height: var(--ds-leading-table); }
+  .table-cell--chevron { border-left: var(--ds-border-thin) solid var(--ds-color-border-soft); justify-content: center; padding-inline: 0; cursor: pointer; }
+  .table-cell--chevron .icon { transition: transform .2s; }
+  .table-cell--chevron.open .icon { transform: rotate(180deg); }
 
   .status-marker { width: var(--ds-space-7); height: var(--ds-space-7); border-radius: var(--ds-radius-round); color: var(--ds-color-surface);
     background: var(--ds-color-avatar); font-family: var(--ds-font-bold); font-size: var(--ds-type-status); flex: none; display: grid; place-items: center; }
 
-  .initials-pill { display: inline-block; background: var(--ds-color-surface); border: var(--ds-border-thin) solid var(--ds-color-border);
-    border-radius: var(--ds-radius-round); padding: var(--ds-space-2) var(--ds-space-4); font-size: var(--ds-type-xs); }
-
-  details.expandable-row, details.medical-documents, details.screening-questions {
-    border-radius: var(--ds-radius-md); color: var(--ds-color-ink); background: var(--ds-color-surface-blue); overflow: hidden; display: block;
+  details.screening-questions, details.medical-documents {
+    border-radius: var(--ds-radius-md); background: var(--ds-color-surface-blue); overflow: hidden; display: block;
   }
   details > summary { list-style: none; padding: var(--ds-space-7); display: flex; justify-content: space-between; align-items: center;
-    font-family: var(--ds-font-display); font-size: var(--ds-type-md); cursor: pointer; }
+    font-family: var(--ds-font-display); font-size: var(--ds-type-md); cursor: pointer; gap: var(--ds-space-3); }
   details > summary::-webkit-details-marker { display: none; }
   details > summary .icon { transition: transform .2s; }
   details[open] > summary .icon { transform: rotate(180deg); }
   details[open] > summary { background: var(--ds-color-tab); font-family: var(--ds-font-medium); }
+  .summary-left { display: flex; align-items: center; gap: var(--ds-space-3); }
 
-  .doc-table { width: 100%; border-collapse: collapse; margin: 0 var(--ds-space-7) var(--ds-space-7); width: calc(100% - var(--ds-space-7) * 2); }
+  .doc-table { width: 100%; border-collapse: collapse; margin: 0 var(--ds-space-7) var(--ds-space-7); width: calc(100% - var(--ds-space-7) * 2); table-layout: fixed; }
   .doc-table th { text-align: left; font-family: var(--ds-font-medium); font-size: var(--ds-type-xs); padding: var(--ds-space-3) var(--ds-space-4);
     border-bottom: var(--ds-border-thin) solid var(--ds-color-border-soft); }
-  .doc-table td { font-size: var(--ds-type-xs); padding: var(--ds-space-3) var(--ds-space-4); border-bottom: var(--ds-border-thin) solid var(--ds-color-border-soft); }
-  .doc-table a { color: var(--ds-color-ink); }
+  .doc-table td { font-size: var(--ds-type-xs); padding: var(--ds-space-3) var(--ds-space-4); border-bottom: var(--ds-border-thin) solid var(--ds-color-border-soft); overflow-wrap: anywhere; }
+  .doc-table a { color: var(--ds-color-ink); text-decoration: underline; }
+  .doc-table .col-download { width: 6%; text-align: center; }
+  .doc-table .col-filename { width: 48%; }
+  .doc-table .col-name { width: 20%; }
+  .doc-table .col-uploaded { width: 26%; }
 
   .screening-list { display: flex; flex-direction: column; gap: var(--ds-space-5); padding: 0 var(--ds-space-7) var(--ds-space-7); }
   .screening-section-title { font-family: var(--ds-font-medium); font-size: var(--ds-type-sm); margin: var(--ds-space-3) 0 0; }
   .screening-item { display: flex; flex-direction: column; gap: var(--ds-space-2); background: var(--ds-color-surface);
     border: var(--ds-border-thin) solid var(--ds-color-border-soft); border-radius: var(--ds-radius-sm); padding: var(--ds-space-4); }
   .screening-item__row { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--ds-space-4); }
-  .screening-item__question { font-size: var(--ds-type-xs); flex: 1; }
-  .screening-item__answer { font-size: var(--ds-type-xs); color: var(--ds-color-ink-muted); margin-top: var(--ds-space-1); }
+  .screening-item__question { font-size: var(--ds-type-xs); flex: 1; font-family: var(--ds-font-medium); }
+  .screening-item__answer { font-size: var(--ds-type-xs); color: var(--ds-color-ink-muted); margin-top: var(--ds-space-1); white-space: pre-wrap; }
   .screening-item textarea { width: 100%; font-family: var(--ds-font-regular); font-size: var(--ds-type-xs); padding: var(--ds-space-3);
     border: var(--ds-border-thin) solid var(--ds-color-border); border-radius: var(--ds-radius-sm); resize: vertical; }
   .screening-item__actions { display: flex; gap: var(--ds-space-3); }
   .screening-btn { font-family: var(--ds-font-medium); font-size: var(--ds-type-xs); border: none; border-bottom: 1.5px solid var(--ds-color-ink); padding: 0; }
+  /* AC-only section: hide edit buttons entirely when role is CD */
+  body[data-role="CD"] #screening-edit-controls .screening-btn { display: none; }
 
-  /* ============ Drawers ============ */
   .drawer-backdrop { position: fixed; inset: 0; background: color-mix(in srgb, var(--ds-color-ink) 40%, transparent); display: none; z-index: 50; }
   .drawer-backdrop.open { display: block; }
   .drawer { position: fixed; top: 0; right: 0; bottom: 0; width: min(420px, 100%); background: var(--ds-color-surface);
     box-shadow: -2px 0 6px 3px rgba(0,0,0,0.1); padding: var(--ds-space-7); overflow-y: auto; border-radius: var(--ds-radius-md) 0 0 var(--ds-radius-md); }
   .drawer__header { display: flex; justify-content: space-between; align-items: center; margin-bottom: var(--ds-space-6); }
-  .drawer__close { border: none; background: none; }
   .drawer label { display: block; font-family: var(--ds-font-medium); font-size: var(--ds-type-xs); margin: var(--ds-space-4) 0 var(--ds-space-2); }
   .drawer select, .drawer input, .drawer textarea {
     width: 100%; font-family: var(--ds-font-regular); font-size: var(--ds-type-xs); padding: var(--ds-space-3);
@@ -250,402 +255,384 @@
   .drawer__cancel { background: var(--ds-color-surface); color: var(--ds-color-ink); border: var(--ds-border-thin) solid var(--ds-color-border); border-radius: var(--ds-radius-sm); padding: var(--ds-space-4); flex: 1; font-family: var(--ds-font-medium); }
   .doctor-entry { border: var(--ds-border-thin) solid var(--ds-color-border-soft); border-radius: var(--ds-radius-sm); padding: var(--ds-space-4); margin-top: var(--ds-space-4); }
   .doctor-entry__remove { font-size: var(--ds-type-xs); border: none; border-bottom: 1.5px solid var(--ds-color-error-300); color: var(--ds-color-error-300); padding: 0; margin-top: var(--ds-space-2); }
-  .add-doctor-btn { margin-top: var(--ds-space-5); font-family: var(--ds-font-medium); font-size: var(--ds-type-xs); border: none; border-bottom: 1.5px solid var(--ds-color-ink); padding: 0; align-self: flex-start; }
+  .add-doctor-btn, .add-diagnosis-btn { margin-top: var(--ds-space-5); font-family: var(--ds-font-medium); font-size: var(--ds-type-xs); border: none; border-bottom: 1.5px solid var(--ds-color-ink); padding: 0; align-self: flex-start; }
 </style>
 </head>
-<body>
+<body data-role="AC">
 
-<!-- ============ Icon sprite ============ -->
 <svg style="display:none">
   <symbol id="icon-edit" viewBox="0 0 24 24"><path d="M14.3281 4.67188L19.3281 9.67188" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M8 20.9996L2 21.9996L3 15.9996L16.414 2.58557C16.7891 2.21063 17.2977 2 17.828 2C18.3583 2 18.8669 2.21063 19.242 2.58557L21.414 4.75757C21.7889 5.13263 21.9996 5.64124 21.9996 6.17157C21.9996 6.7019 21.7889 7.21052 21.414 7.58557L8 20.9996Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
   <symbol id="icon-chevron-down" viewBox="0 0 24 24"><path d="M3 8L12 17L21 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
   <symbol id="icon-lock" viewBox="0 0 24 24"><path d="M17 6.76208C17.0131 5.51185 16.5042 4.30786 15.5853 3.41488C14.6664 2.5219 13.4128 2.01305 12.1 2.00023H12C10.6872 1.98779 9.42303 2.47242 8.48539 3.34754C7.54776 4.22266 7.01346 5.41662 7 6.66685V10.5716M3 10.5716H21V22H12H3V10.5716ZM14 16.2858C14 17.3377 13.1046 18.1905 12 18.1905C10.8954 18.1905 10 17.3377 10 16.2858C10 15.2338 10.8954 14.381 12 14.381C13.1046 14.381 14 15.2338 14 16.2858Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
-  <symbol id="icon-protection" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" fill="none" d="M8 12.75 10.25 15 16 8.75"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" fill="none" d="M12 22s9-2 9-11V4c-3.2 0-6.11-.73-9-2-2.89 1.27-5.8 2-9 2v7c0 9 9 11 9 11"/></symbol>
   <symbol id="icon-add" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-width="2" fill="none" d="M20 11.92H4M12.08 20V4"/></symbol>
   <symbol id="icon-arrow-left" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" fill="none" d="M19 12H3.5m0 0 7 7m-7-7 7-7"/></symbol>
   <symbol id="icon-sort" viewBox="0 0 24 24"><path d="M17 16L12 21L7 16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M7 8L12 3L17 8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/></symbol>
-  <symbol id="icon-ellipsis-vertical" viewBox="0 0 24 24"><path fill="currentColor" d="M10 12a2 2 0 1 0 4 0 2 2 0 0 0-4 0Zm0-9a2 2 0 1 0 4 0 2 2 0 0 0-4 0Zm0 18a2 2 0 1 0 4 0 2 2 0 0 0-4 0Z"/></symbol>
   <symbol id="icon-person" viewBox="0 0 24 24"><path d="M12 9.56757C14.0538 9.56757 15.7188 7.87351 15.7188 5.78378C15.7188 3.69406 14.0538 2 12 2C9.94619 2 8.28125 3.69406 8.28125 5.78378C8.28125 7.87351 9.94619 9.56757 12 9.56757Z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round" fill="none"/><path d="M12 13.8919C8.5211 13.8919 6.49231 15.7121 5.625 16.5946C4.75769 17.4771 3.5 19.4195 3.5 22H20.5C20.5 19.4195 19.4375 17.6757 18.375 16.5946C17.2441 15.444 15.4789 13.8919 12 13.8919Z" stroke="currentColor" stroke-width="2" stroke-miterlimit="10" stroke-linecap="square" stroke-linejoin="round" fill="none"/></symbol>
 </svg>
 
-<div class="app-shell">
-
-  <div class="top-bar">
-    <div class="brand">
-      <div class="brand-mark">G</div>
-      <span class="app-name">Alarmen</span>
-    </div>
-    <div class="profile">
-      <div class="avatar"><svg class="icon" style="width:18px;height:18px;"><use href="#icon-person"/></svg></div>
-      <span class="profile-name">Silje</span>
-      <svg class="icon"><use href="#icon-chevron-down"/></svg>
-    </div>
+<div class="top-bar">
+  <div class="brand">
+    <div class="brand-mark">G</div>
+    <span class="app-name">Alarmen</span>
   </div>
+  <div class="profile">
+    <div class="avatar"><svg class="icon" style="width:18px;height:18px;"><use href="#icon-person"/></svg></div>
+    <span class="profile-name">Silje</span>
+    <svg class="icon"><use href="#icon-chevron-down"/></svg>
+  </div>
+</div>
 
-  <nav class="navigation" aria-label="Primary">
-    <span class="navigation__item">My cases</span>
-    <span class="navigation__item">My tasks</span>
-    <span class="navigation__item">Team dashboard</span>
-    <span class="navigation__item">Incoming e-mail</span>
-  </nav>
+<nav class="navigation" aria-label="Primary">
+  <span class="navigation__item">My cases</span>
+  <span class="navigation__item">My tasks</span>
+  <span class="navigation__item">Team dashboard</span>
+  <span class="navigation__item">Incoming e-mail</span>
+</nav>
 
-  <header class="case-header">
-    <div class="case-header__inner">
-      <button class="back-link"><svg class="icon"><use href="#icon-arrow-left"/></svg> Back</button>
-      <div class="case-title">
-        <div class="case-title__line">
-          <h1 class="page-heading">Name Nameson 🇳🇴 📌</h1>
-        </div>
+<header class="case-header">
+  <div class="case-header__inner">
+    <button class="back-link"><svg class="icon"><use href="#icon-arrow-left"/></svg> Back</button>
+    <div class="case-title-row">
+      <div>
+        <h1 class="page-heading">Name of Customer</h1>
         <p class="case-number">Case number: 123456789</p>
       </div>
-      <div class="tabs">
-        <span class="tab">Tab</span>
-        <span class="tab">Tab</span>
-        <span class="tab tab--active">Medical</span>
-        <span class="tab">Tab</span>
-        <span class="tab">Tab</span>
-        <span class="tab">Tab</span>
-        <span class="tab">Tab</span>
-        <span class="tab">Tab</span>
+      <div style="display:flex; align-items:center;">
+        <span class="role-toggle-label">Temporary role preview:</span>
+        <div class="role-toggle">
+          <button class="active" id="role-ac-btn" onclick="setRole('AC')">AC</button>
+          <button id="role-cd-btn" onclick="setRole('CD')">CD</button>
+        </div>
       </div>
     </div>
-  </header>
+    <div class="tabs">
+      <span class="tab">Overview &amp; Tasks</span>
+      <span class="tab">Travel Details</span>
+      <span class="tab tab--active">Medical</span>
+      <span class="tab">Contacts</span>
+      <span class="tab">Logg</span>
+      <span class="tab">Financials</span>
+      <span class="tab">Policy</span>
+      <span class="tab">Communication</span>
+    </div>
+  </div>
+</header>
 
-  <div class="workspace">
-    <div class="workspace__inner">
+<div class="workspace">
+  <div class="workspace__inner">
 
-      <!-- LEFT COLUMN -->
-      <div class="left-column">
+    <!-- LEFT COLUMN -->
+    <div class="left-column">
 
-        <section class="panel panel--blue">
-          <div class="panel-title">
-            <h3 class="section-heading">Hospital</h3>
-          </div>
-          <div class="detail-list">
-            <div class="detail-row"><span class="detail-row__label">Hospital</span><span class="detail-row__value">Bumrungrad hospital, Bankkok, Thailand</span></div>
-            <div class="detail-row"><span class="detail-row__label">Phone number</span><span class="detail-row__value">+ 66 2 849 0383</span></div>
-            <div class="detail-row"><span class="detail-row__label">Location</span><span class="detail-row__value">33 Soi Sukumvit, 3, Bankok, Thailand</span></div>
-          </div>
-          <hr class="divider">
-          <div class="detail-list">
-            <div class="detail-row"><span class="detail-row__label">Department</span><span class="detail-row__value">Neurology</span></div>
-            <div class="detail-row"><span class="detail-row__label">Treating doctor</span><span class="detail-row__value">Name Nameson</span></div>
-            <div class="detail-row"><span class="detail-row__label">Number of treating doctor</span><span class="detail-row__value">+ 66 3 749 0383</span></div>
-          </div>
-        </section>
+      <section class="panel panel--blue" data-editable-by="AC">
+        <div class="panel-title">
+          <h3 class="section-heading">Hospital</h3>
+        </div>
+        <div class="detail-list">
+          <div class="detail-row"><span class="detail-row__label">Hospital</span><span>Bumrungrad hospital, Bankkok, Thailand</span></div>
+          <div class="detail-row"><span class="detail-row__label">Phone number</span><span>+ 66 2 849 0383</span></div>
+          <div class="detail-row"><span class="detail-row__label">Location</span><span>33 Soi Sukumvit, 3, Bankok, Thailand</span></div>
+        </div>
+        <hr class="divider">
+        <div class="detail-list">
+          <div class="detail-row"><span class="detail-row__label">Department</span><span>Neurology</span></div>
+          <div class="detail-row"><span class="detail-row__label">Treating doctor</span><span>Name Nameson</span></div>
+          <div class="detail-row"><span class="detail-row__label">Number of treating doctor</span><span>+ 66 3 749 0383</span></div>
+        </div>
+      </section>
 
-        <section class="panel panel--blue">
-          <div class="panel-title">
-            <h3 class="section-heading">Treatment</h3>
-            <button class="edit-link" onclick="openDrawer('treatment-drawer')"><svg class="icon"><use href="#icon-edit"/></svg> Edit</button>
-          </div>
-          <div class="detail-list">
-            <div class="detail-row"><span class="detail-row__label">Type of patient</span><span class="detail-row__value">In-patient</span></div>
-            <div class="detail-row"><span class="detail-row__label">Date of admission</span><span class="detail-row__value">2026-06-28</span></div>
-            <div class="detail-row"><span class="detail-row__label">Date of discharge</span><span class="detail-row__value">-</span></div>
-            <div class="detail-row"><span class="detail-row__label">Description of incident</span><span class="detail-row__value">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span></div>
-          </div>
-          <button class="history-link" id="history-toggle" aria-expanded="false" onclick="toggleHistory()">
-            <svg class="icon"><use href="#icon-chevron-down"/></svg> View history
-          </button>
-          <div class="history-cards" id="history-cards">
-            <div class="history-card"><div class="history-card__date">16.08.2026</div><div class="detail-row"><span class="detail-row__label">Cause</span><span class="detail-row__value">Inpatient: Illness</span></div><div class="detail-row"><span class="detail-row__label">Description</span><span class="detail-row__value">Hospitalised with severe head injury</span></div><div class="detail-row"><span class="detail-row__label">Treatment date</span><span class="detail-row__value">06.07.2026</span></div><div class="detail-row"><span class="detail-row__label">Follow-up date</span><span class="detail-row__value">06.08.2026</span></div></div>
-            <div class="history-card"><div class="history-card__date">12.07.2026</div><div class="detail-row"><span class="detail-row__label">Cause</span><span class="detail-row__value">Outpatient: Illness</span></div><div class="detail-row"><span class="detail-row__label">Description</span><span class="detail-row__value">Follow-up examination</span></div><div class="detail-row"><span class="detail-row__label">Treatment date</span><span class="detail-row__value">12.07.2026</span></div><div class="detail-row"><span class="detail-row__label">Follow-up date</span><span class="detail-row__value">26.07.2026</span></div></div>
-            <div class="history-card"><div class="history-card__date">28.06.2026</div><div class="detail-row"><span class="detail-row__label">Cause</span><span class="detail-row__value">Inpatient: Illness</span></div><div class="detail-row"><span class="detail-row__label">Description</span><span class="detail-row__value">Initial admission</span></div><div class="detail-row"><span class="detail-row__label">Treatment date</span><span class="detail-row__value">28.06.2026</span></div><div class="detail-row"><span class="detail-row__label">Follow-up date</span><span class="detail-row__value">05.07.2026</span></div></div>
-          </div>
-        </section>
+      <section class="panel panel--blue" data-editable-by="AC">
+        <div class="panel-title">
+          <h3 class="section-heading">Treatment</h3>
+          <button class="edit-link edit-action" onclick="openDrawer('treatment-drawer')"><svg class="icon"><use href="#icon-edit"/></svg> Edit</button>
+          <span class="role-badge" style="display:none;"><svg class="icon"><use href="#icon-lock"/></svg> AC Only</span>
+        </div>
+        <div class="detail-list">
+          <div class="detail-row"><span class="detail-row__label">Type of patient</span><span>In-patient</span></div>
+          <div class="detail-row"><span class="detail-row__label">Date of admission</span><span>28.06.2026</span></div>
+          <div class="detail-row"><span class="detail-row__label">Date of discharge</span><span>-</span></div>
+          <div class="detail-row"><span class="detail-row__label">Description of incident</span><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</span></div>
+        </div>
+        <button class="history-link" id="history-toggle" aria-expanded="false" onclick="toggleHistory()">
+          <svg class="icon"><use href="#icon-chevron-down"/></svg> View history
+        </button>
+        <div class="history-cards" id="history-cards">
+          <div class="history-card"><div class="history-card__date"><span class="history-card__dot"></span>16.08.2026</div><div class="detail-row"><span class="detail-row__label">Type of patient</span><span>In-patient</span></div><div class="detail-row"><span class="detail-row__label">Description</span><span>Hospitalised with severe head injury</span></div></div>
+          <div class="history-card"><div class="history-card__date"><span class="history-card__dot"></span>12.07.2026</div><div class="detail-row"><span class="detail-row__label">Type of patient</span><span>Out-patient</span></div><div class="detail-row"><span class="detail-row__label">Description</span><span>Follow-up examination</span></div></div>
+          <div class="history-card"><div class="history-card__date"><span class="history-card__dot"></span>28.06.2026</div><div class="detail-row"><span class="detail-row__label">Type of patient</span><span>In-patient</span></div><div class="detail-row"><span class="detail-row__label">Description</span><span>Initial admission</span></div></div>
+        </div>
+      </section>
 
-        <section class="panel panel--blue">
-          <div class="panel-title">
-            <h3 class="section-heading">Doctors</h3>
-            <button class="edit-link" onclick="openDrawer('doctor-drawer')"><svg class="icon"><use href="#icon-edit"/></svg> Add Doctors</button>
-          </div>
-          <h4 class="subheading">Contact Doctor 1</h4>
-          <div class="detail-list">
-            <div class="detail-row"><span class="detail-row__label">Name &amp; Type</span><span class="detail-row__value">Jason Peterson - Cardiolagist</span></div>
-            <div class="detail-row"><span class="detail-row__label">Involvement in the case</span><span class="detail-row__value">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span></div>
-          </div>
-        </section>
+      <section class="panel panel--blue" data-editable-by="AC">
+        <div class="panel-title">
+          <h3 class="section-heading">Doctors</h3>
+          <button class="edit-link edit-action" onclick="openDrawer('doctor-drawer')"><svg class="icon"><use href="#icon-edit"/></svg> Edit</button>
+          <span class="role-badge" style="display:none;"><svg class="icon"><use href="#icon-lock"/></svg> AC Only</span>
+        </div>
+        <h4 class="subheading">Contact Doctor</h4>
+        <div class="detail-list">
+          <div class="detail-row"><span class="detail-row__label">Name &amp; Type</span><span>Jason Peterson - Cardiologist</span></div>
+          <div class="detail-row"><span class="detail-row__label">Involvement in the case</span><span>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</span></div>
+        </div>
+      </section>
 
-        <div class="primary-action">Create Transport Assessment <svg class="icon" style="width:24px;height:24px;"><use href="#icon-add"/></svg></div>
-        <div class="primary-action">Create Fit For Flight <svg class="icon" style="width:24px;height:24px;"><use href="#icon-add"/></svg></div>
+      <div class="primary-action">Create Transport Assessment <svg class="icon" style="width:24px;height:24px;"><use href="#icon-add"/></svg></div>
+      <div class="primary-action">Create Fit For Flight <svg class="icon" style="width:24px;height:24px;"><use href="#icon-add"/></svg></div>
 
-      </div>
+    </div>
 
-      <!-- RIGHT COLUMN -->
-      <div class="right-column">
+    <!-- RIGHT COLUMN -->
+    <div class="right-column">
 
-        <div style="display:grid; grid-template-columns: 440px 1fr; gap: 24px; align-items: start;">
+      <div style="display:grid; grid-template-columns: 440px 1fr; gap: 24px; align-items: start;">
 
-          <div style="display:flex; flex-direction:column; gap:16px;">
-            <div class="classification-select classification-select--ordinary-illness" id="classification-wrapper">
-              <select class="classification-select__control" id="classification-select" onchange="updateClassification(this)">
-                <option value="classification-triage-not-selected">Classification/Triage not selected</option>
-                <option value="ordinary-illness" selected>Ordinary illness</option>
-                <option value="serious-cases">Serious Cases</option>
-                <option value="life-threatening-cases">Life threatening cases</option>
-              </select>
-            </div>
-
-            <section class="panel panel--outline">
-              <div class="panel-title">
-                <h3 class="section-heading">Diagnose</h3>
-                <span class="privacy-badge"><svg class="icon"><use href="#icon-lock"/></svg> CD Only</span>
-              </div>
-
-              <div><h4 class="subheading">Diagnose 1</h4>
-                <div class="detail-list">
-                  <div class="detail-row" style="grid-template-columns:50px minmax(0,1fr);"><span class="detail-row__label">ICD-10</span><span class="detail-row__value">E12.5</span></div>
-                  <div class="detail-row" style="grid-template-columns:50px minmax(0,1fr);"><span class="detail-row__label">English</span><span class="detail-row__value">Malnutrition-related diabetes mellitus with peripheral circulatory disorder</span></div>
-                </div>
-              </div>
-              <div><h4 class="subheading">Diagnose 2</h4>
-                <div class="detail-list">
-                  <div class="detail-row" style="grid-template-columns:50px minmax(0,1fr);"><span class="detail-row__label">ICD-10</span><span class="detail-row__value">T67.0</span></div>
-                  <div class="detail-row" style="grid-template-columns:50px minmax(0,1fr);"><span class="detail-row__label">English</span><span class="detail-row__value">Heatstroke and sunstroke</span></div>
-                </div>
-              </div>
-              <div><h4 class="subheading">Diagnose 3</h4>
-                <div class="detail-list">
-                  <div class="detail-row" style="grid-template-columns:50px minmax(0,1fr);"><span class="detail-row__label">ICD-10</span><span class="detail-row__value">T67.0</span></div>
-                  <div class="detail-row" style="grid-template-columns:50px minmax(0,1fr);"><span class="detail-row__label">English</span><span class="detail-row__value">Heatstroke and sunstroke</span></div>
-                </div>
-              </div>
-            </section>
+        <div style="display:flex; flex-direction:column; gap:16px;">
+          <div class="classification-select classification-select--common-illness" id="classification-wrapper">
+            <select class="classification-select__control" id="classification-select" onchange="updateClassification(this)">
+              <option value="not-set">Classification/Triage not selected</option>
+              <option value="common-illness" selected>Ordinary illness</option>
+              <option value="serious-cases">Serious Cases</option>
+              <option value="life-threatening-cases">Life threatening cases</option>
+            </select>
           </div>
 
-          <section class="panel panel--outline">
+          <section class="panel panel--outline" data-editable-by="CD">
             <div class="panel-title">
-              <h3 class="section-heading">Risk Assesment</h3>
-              <span class="privacy-badge"><svg class="icon"><use href="#icon-lock"/></svg> CD Only</span>
+              <h3 class="section-heading">Diagnoses</h3>
+              <button class="edit-link edit-action"><svg class="icon"><use href="#icon-edit"/></svg> Edit</button>
+              <span class="role-badge" style="display:none;"><svg class="icon"><use href="#icon-lock"/></svg> CD Only</span>
             </div>
-            <div class="risk-list">
-              <div class="risk-row"><span>Urgent</span><span>No</span></div>
-              <div class="risk-row risk-row--alert"><span>Serious</span><span>Yes</span></div>
-              <div class="risk-row"><span>Life threatning</span><span>No</span></div>
-              <div class="risk-row"><span>Possible pre-existing medical condition (DK &amp; SE cases)</span><span>No</span></div>
-              <div class="risk-row"><span>Possible FBB (NO cases)</span><span>No</span></div>
-              <div class="risk-row risk-row--alert"><span>Possible overtreatment</span><span>Yes</span></div>
-              <div class="risk-row"><span>Possible treatment failure</span><span>No</span></div>
-              <div class="risk-row"><span>Need for urgent evacuation</span><span>No</span></div>
+
+            <div><h4 class="subheading">Diagnosis 1</h4>
+              <div class="detail-list">
+                <div class="detail-row" style="grid-template-columns:50px minmax(0,1fr);"><span class="detail-row__label">ICD-10</span><span>E12.5</span></div>
+                <div class="detail-row" style="grid-template-columns:50px minmax(0,1fr);"><span class="detail-row__label">English</span><span>Malnutrition-related diabetes mellitus with peripheral circulatory disorder</span></div>
+              </div>
+            </div>
+            <div><h4 class="subheading">Diagnosis 2</h4>
+              <div class="detail-list">
+                <div class="detail-row" style="grid-template-columns:50px minmax(0,1fr);"><span class="detail-row__label">ICD-10</span><span>T67.0</span></div>
+                <div class="detail-row" style="grid-template-columns:50px minmax(0,1fr);"><span class="detail-row__label">English</span><span>Heatstroke and sunstroke</span></div>
+              </div>
+            </div>
+            <div><h4 class="subheading">Diagnosis 3</h4>
+              <div class="detail-list">
+                <div class="detail-row" style="grid-template-columns:50px minmax(0,1fr);"><span class="detail-row__label">ICD-10</span><span>T67.0</span></div>
+                <div class="detail-row" style="grid-template-columns:50px minmax(0,1fr);"><span class="detail-row__label">English</span><span>Heatstroke and sunstroke</span></div>
+              </div>
             </div>
           </section>
         </div>
 
-        <section class="assessment">
-          <h3 class="section-heading assessment__title">Interventions &amp; Transport Assessment</h3>
-          <div class="table-scroll">
-            <div class="assessment-table">
-              <div class="assessment-table__header" role="row">
-                <div class="table-heading table-heading--empty"></div>
-                <div class="table-heading">Order <svg class="icon"><use href="#icon-sort"/></svg></div>
-                <div class="table-heading">Date <svg class="icon"><use href="#icon-sort"/></svg></div>
-                <div class="table-heading">Time</div>
-                <div class="table-heading">Intervention</div>
-                <div class="table-heading">Initials <svg class="icon"><use href="#icon-sort"/></svg></div>
-              </div>
-
-              <div class="assessment-table__row" role="row">
-                <div class="table-cell table-cell--chevron"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
-                <div class="table-cell"><span class="status-marker">M5</span></div>
-                <div class="table-cell">2026-08-18</div><div class="table-cell">14:35</div>
-                <div class="table-cell">Intervention based on Medical Report</div>
-                <div class="table-cell"><span class="initials-pill">NKV</span></div>
-              </div>
-              <div class="assessment-table__row" role="row">
-                <div class="table-cell table-cell--chevron"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
-                <div class="table-cell"><span class="status-marker">M4</span></div>
-                <div class="table-cell">2026-08-17</div><div class="table-cell">09:20</div>
-                <div class="table-cell">Intervention based on TP consultation</div>
-                <div class="table-cell"><span class="initials-pill">JHN</span></div>
-              </div>
-              <div class="assessment-table__row" role="row">
-                <div class="table-cell table-cell--chevron"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
-                <div class="table-cell"><span class="status-marker">M3</span></div>
-                <div class="table-cell">2026-08-16</div><div class="table-cell">18:45</div>
-                <div class="table-cell">CLI informed and agrees to Medical transport plan</div>
-                <div class="table-cell"><span class="initials-pill">NKV</span></div>
-              </div>
-              <div class="assessment-table__row" role="row">
-                <div class="table-cell table-cell--chevron"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
-                <div class="table-cell"><span class="status-marker">M2</span></div>
-                <div class="table-cell">2026-08-15</div><div class="table-cell">07:10</div>
-                <div class="table-cell">Other</div>
-                <div class="table-cell"><span class="initials-pill">SRN</span></div>
-              </div>
-              <div class="assessment-table__row" role="row">
-                <div class="table-cell table-cell--chevron"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
-                <div class="table-cell"><span class="status-marker">M1</span></div>
-                <div class="table-cell">2026-08-14</div><div class="table-cell">22:55</div>
-                <div class="table-cell">Intervention based on Medical Report</div>
-                <div class="table-cell"><span class="initials-pill">NKV</span></div>
-              </div>
-            </div>
+        <section class="panel panel--outline" data-editable-by="CD">
+          <div class="panel-title">
+            <h3 class="section-heading">Risk assessment</h3>
+            <button class="edit-link edit-action"><svg class="icon"><use href="#icon-edit"/></svg> Edit</button>
+            <span class="role-badge" style="display:none;"><svg class="icon"><use href="#icon-lock"/></svg> CD Only</span>
+          </div>
+          <div class="risk-list">
+            <div class="risk-row"><span>Urgent</span><span>No</span></div>
+            <div class="risk-row risk-row--alert"><span>Serious</span><span>Yes</span></div>
+            <div class="risk-row"><span>Life threatening</span><span>No</span></div>
+            <div class="risk-row"><span>Possible pre-existing medical condition (DK &amp; SE cases)</span><span>No</span></div>
+            <div class="risk-row"><span>Possible FBB (NO cases)</span><span>No</span></div>
+            <div class="risk-row risk-row--alert"><span>Possible overtreatment</span><span>Yes</span></div>
+            <div class="risk-row"><span>Possible treatment failure</span><span>To be assessed</span></div>
+            <div class="risk-row"><span>Need for urgent evacuation</span><span>No</span></div>
           </div>
         </section>
+      </div>
 
-        <details class="screening-questions">
-          <summary>Screening Questions <svg class="icon"><use href="#icon-chevron-down"/></svg></summary>
-          <div class="screening-list">
-            <p class="screening-section-title">In case of a possible pre-existing medical condition</p>
-            <div class="screening-item" data-screening>
-              <div class="screening-item__row">
-                <span class="screening-item__question">a. Describe your symptoms / what has happened?</span>
-                <button class="screening-btn" onclick="editScreening(this)">Edit</button>
-              </div>
-              <div class="screening-item__answer">-</div>
+      <section class="assessment" data-editable-by="CD">
+        <div class="assessment-header">
+          <h3 class="section-heading">Interventions &amp; Transport Assessment</h3>
+          <button class="add-btn edit-action"><svg class="icon"><use href="#icon-add"/></svg> Add Intervention</button>
+          <span class="role-badge" style="display:none;"><svg class="icon"><use href="#icon-lock"/></svg> CD Only</span>
+        </div>
+        <div class="table-scroll">
+          <div class="assessment-table">
+            <div class="assessment-table__header" role="row">
+              <div class="table-heading table-heading--empty"></div>
+              <div class="table-heading">Order <svg class="icon"><use href="#icon-sort"/></svg></div>
+              <div class="table-heading">Date <svg class="icon"><use href="#icon-sort"/></svg></div>
+              <div class="table-heading">Time</div>
+              <div class="table-heading">Intervention</div>
+              <div class="table-heading">Name</div>
             </div>
-            <div class="screening-item" data-screening>
-              <div class="screening-item__row">
-                <span class="screening-item__question">b. When did the symptoms start, and how have they developed?</span>
-                <button class="screening-btn" onclick="editScreening(this)">Edit</button>
-              </div>
-              <div class="screening-item__answer">-</div>
+
+            <div class="assessment-table__row" role="row" data-detail="CLI confirmed fit to fly, awaiting final transport confirmation from local agent.">
+              <div class="table-cell table-cell--chevron" onclick="toggleRow(this)"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
+              <div class="table-cell"><span class="status-marker">M5</span></div>
+              <div class="table-cell">18.08.2026</div><div class="table-cell">14:35</div>
+              <div class="table-cell">Intervention based on Medical Report</div>
+              <div class="table-cell">NKV</div>
             </div>
-            <div class="screening-item" data-screening>
-              <div class="screening-item__row">
-                <span class="screening-item__question">c. Have you seen a doctor / received treatment? (who, what treatment, when?)</span>
-                <button class="screening-btn" onclick="editScreening(this)">Edit</button>
-              </div>
-              <div class="screening-item__answer">-</div>
+            <div class="assessment-table__row" role="row" data-detail="TP consultation completed, recommendation pending.">
+              <div class="table-cell table-cell--chevron" onclick="toggleRow(this)"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
+              <div class="table-cell"><span class="status-marker">M4</span></div>
+              <div class="table-cell">17.08.2026</div><div class="table-cell">09:20</div>
+              <div class="table-cell">Intervention based on TP consultation</div>
+              <div class="table-cell">JHN</div>
             </div>
-            <div class="screening-item" data-screening>
-              <div class="screening-item__row">
-                <span class="screening-item__question">d. What has the doctor said / diagnosis / what is the treatment plan?</span>
-                <button class="screening-btn" onclick="editScreening(this)">Edit</button>
-              </div>
-              <div class="screening-item__answer">-</div>
+            <div class="assessment-table__row" role="row" data-detail="CLI informed and agrees to Medical transport plan. Next intervention planned 18.08.2026.">
+              <div class="table-cell table-cell--chevron" onclick="toggleRow(this)"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
+              <div class="table-cell"><span class="status-marker">M3</span></div>
+              <div class="table-cell">16.08.2026</div><div class="table-cell">18:45</div>
+              <div class="table-cell">Intervention Discussed with another CD</div>
+              <div class="table-cell">NKV</div>
             </div>
-            <div class="screening-item" data-screening>
-              <div class="screening-item__row">
-                <span class="screening-item__question">e. Have you received a medical report, or can you take a photo of it and send it to us?</span>
-                <button class="screening-btn" onclick="editScreening(this)">Edit</button>
-              </div>
-              <div class="screening-item__answer">-</div>
+            <div class="assessment-table__row" role="row" data-detail="Answered additional questions from AC regarding transport logistics.">
+              <div class="table-cell table-cell--chevron" onclick="toggleRow(this)"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
+              <div class="table-cell"><span class="status-marker">M2</span></div>
+              <div class="table-cell">15.08.2026</div><div class="table-cell">07:10</div>
+              <div class="table-cell">Answering Questions from AC</div>
+              <div class="table-cell">SRN</div>
             </div>
-            <div class="screening-item" data-screening>
-              <div class="screening-item__row">
-                <span class="screening-item__question">f. Clarify what assistance is needed / what assistance we can provide.</span>
-                <button class="screening-btn" onclick="editScreening(this)">Edit</button>
-              </div>
-              <div class="screening-item__answer">-</div>
-            </div>
-            <div class="screening-item" data-screening>
-              <div class="screening-item__row">
-                <span class="screening-item__question">1. Have you had these symptoms before? If so, when?</span>
-                <button class="screening-btn" onclick="editScreening(this)">Edit</button>
-              </div>
-              <div class="screening-item__answer">-</div>
-            </div>
-            <div class="screening-item" data-screening>
-              <div class="screening-item__row">
-                <span class="screening-item__question">2. Did you see a doctor or visit a hospital before departure? Did the doctor say that you were fit to travel?</span>
-                <button class="screening-btn" onclick="editScreening(this)">Edit</button>
-              </div>
-              <div class="screening-item__answer">-</div>
-            </div>
-            <div class="screening-item" data-screening>
-              <div class="screening-item__row">
-                <span class="screening-item__question">3. Did you make any changes to your medication before departure?</span>
-                <button class="screening-btn" onclick="editScreening(this)">Edit</button>
-              </div>
-              <div class="screening-item__answer">-</div>
-            </div>
-            <div class="screening-item" data-screening>
-              <div class="screening-item__row">
-                <span class="screening-item__question">4. What medication have you previously received for these symptoms?</span>
-                <button class="screening-btn" onclick="editScreening(this)">Edit</button>
-              </div>
-              <div class="screening-item__answer">-</div>
+            <div class="assessment-table__row" role="row" data-detail="ESN/ESD informed about CLI's medical history ahead of admission.">
+              <div class="table-cell table-cell--chevron" onclick="toggleRow(this)"><svg class="icon"><use href="#icon-chevron-down"/></svg></div>
+              <div class="table-cell"><span class="status-marker">M1</span></div>
+              <div class="table-cell">14.08.2026</div><div class="table-cell">22:55</div>
+              <div class="table-cell">ESN/ESD informed about CLI's medical history</div>
+              <div class="table-cell">NKV</div>
             </div>
           </div>
-        </details>
+        </div>
+      </section>
 
-        <details class="medical-documents">
-          <summary>Medical Documents <svg class="icon"><use href="#icon-chevron-down"/></svg></summary>
-          <table class="doc-table">
-            <thead><tr><th>File name</th><th>Uploaded by</th><th>Uploaded</th></tr></thead>
-            <tbody>
-              <tr><td><a href="data:text/plain;charset=utf-8,Medical%20document%20prototype" download="MedicalReport.pdf">MedicalReport.pdf</a></td><td>Isabella Seraphina</td><td>04.10.2025 13:04:15</td></tr>
-              <tr><td><a href="data:text/plain;charset=utf-8,Medical%20document%20prototype" download="MedicalReport2.jpg">MedicalReport2.jpg</a></td><td>Nathaniel Augustus Pendragon</td><td>03.10.2025 08:52:15</td></tr>
-            </tbody>
-          </table>
-        </details>
+      <details class="screening-questions" data-editable-by="AC">
+        <summary>
+          <span class="summary-left">
+            <span id="screening-title">Screening Questions</span>
+            <span class="role-badge" style="display:none;"><svg class="icon"><use href="#icon-lock"/></svg> AC Only</span>
+          </span>
+          <svg class="icon"><use href="#icon-chevron-down"/></svg>
+        </summary>
+        <div class="screening-list" id="screening-edit-controls">
+          <div class="screening-item" data-screening>
+            <div class="screening-item__row"><span class="screening-item__question">a. Describe your symptoms / what has happened?</span><button class="screening-btn" onclick="editScreening(this)">Edit</button></div>
+            <div class="screening-item__answer">-</div>
+          </div>
+          <div class="screening-item" data-screening>
+            <div class="screening-item__row"><span class="screening-item__question">b. When did the symptoms start, and how have they developed?</span><button class="screening-btn" onclick="editScreening(this)">Edit</button></div>
+            <div class="screening-item__answer">-</div>
+          </div>
+          <div class="screening-item" data-screening>
+            <div class="screening-item__row"><span class="screening-item__question">c. Have you seen a doctor / received treatment? (who, what treatment, when?)</span><button class="screening-btn" onclick="editScreening(this)">Edit</button></div>
+            <div class="screening-item__answer">-</div>
+          </div>
+          <div class="screening-item" data-screening>
+            <div class="screening-item__row"><span class="screening-item__question">d. What has the doctor said / diagnosis / what is the treatment plan?</span><button class="screening-btn" onclick="editScreening(this)">Edit</button></div>
+            <div class="screening-item__answer">-</div>
+          </div>
+          <div class="screening-item" data-screening>
+            <div class="screening-item__row"><span class="screening-item__question">e. Have you received a medical report, or can you take a photo of it and send it to us?</span><button class="screening-btn" onclick="editScreening(this)">Edit</button></div>
+            <div class="screening-item__answer">-</div>
+          </div>
+          <div class="screening-item" data-screening>
+            <div class="screening-item__row"><span class="screening-item__question">f. Clarify what assistance is needed / what assistance we can provide.</span><button class="screening-btn" onclick="editScreening(this)">Edit</button></div>
+            <div class="screening-item__answer">-</div>
+          </div>
+          <p class="screening-section-title">In case of a possible pre-existing medical condition</p>
+          <div class="screening-item" data-screening>
+            <div class="screening-item__row"><span class="screening-item__question">1. Have you had these symptoms before? If so, when?</span><button class="screening-btn" onclick="editScreening(this)">Edit</button></div>
+            <div class="screening-item__answer">-</div>
+          </div>
+          <div class="screening-item" data-screening>
+            <div class="screening-item__row"><span class="screening-item__question">2. Did you see a doctor or visit a hospital before departure? Did the doctor say that you were fit to travel?</span><button class="screening-btn" onclick="editScreening(this)">Edit</button></div>
+            <div class="screening-item__answer">-</div>
+          </div>
+          <div class="screening-item" data-screening>
+            <div class="screening-item__row"><span class="screening-item__question">3. Did you make any changes to your medication before departure?</span><button class="screening-btn" onclick="editScreening(this)">Edit</button></div>
+            <div class="screening-item__answer">-</div>
+          </div>
+          <div class="screening-item" data-screening>
+            <div class="screening-item__row"><span class="screening-item__question">4. What medication have you previously received for these symptoms?</span><button class="screening-btn" onclick="editScreening(this)">Edit</button></div>
+            <div class="screening-item__answer">-</div>
+          </div>
+        </div>
+      </details>
 
-      </div>
+      <details class="medical-documents">
+        <summary>Medical Documents <svg class="icon"><use href="#icon-chevron-down"/></svg></summary>
+        <table class="doc-table">
+          <thead><tr><th class="col-download"></th><th class="col-filename">File name</th><th class="col-name">Name</th><th class="col-uploaded">Uploaded</th></tr></thead>
+          <tbody>
+            <tr><td class="col-download">↓</td><td class="col-filename"><a href="data:text/plain;charset=utf-8,Medical%20document%20prototype" download="Anotherfile.jpg">Anotherfile.jpg</a></td><td>Nina K. Vik</td><td>06.10.2025 08:54:15</td></tr>
+            <tr><td class="col-download">↓</td><td class="col-filename"><a href="data:text/plain;charset=utf-8,Medical%20document%20prototype" download="ThisisanexampleofapdfThisisanexampleofapd.pdf">ThisisanexampleofapdfThisisanexampleofapd.pdf</a></td><td>Lars H. Rønning</td><td>06.10.2025 16:55:15</td></tr>
+            <tr><td class="col-download">↓</td><td class="col-filename"><a href="data:text/plain;charset=utf-8,Medical%20document%20prototype" download="MedicalTransportplan.pdf">MedicalTransportplan.pdf</a></td><td>Nina K. Vik</td><td>06.10.2025 23:52:12</td></tr>
+            <tr><td class="col-download">↓</td><td class="col-filename"><a href="data:text/plain;charset=utf-8,Medical%20document%20prototype" download="OtherMedicalInformation.pdf">OtherMedicalInformation.pdf</a></td><td>Maja S. Aasen</td><td>04.10.2025 13:04:15</td></tr>
+            <tr><td class="col-download">↓</td><td class="col-filename"><a href="data:text/plain;charset=utf-8,Medical%20document%20prototype" download="MedicalReport_28794373.jpg">MedicalReport_28794373.jpg</a></td><td>Robert B. Tangen</td><td>03.10.2025 08:52:15</td></tr>
+          </tbody>
+        </table>
+      </details>
+
     </div>
   </div>
 </div>
 
-<!-- ============ Treatment drawer ============ -->
-<div class="drawer-backdrop" id="treatment-backdrop" onclick="closeDrawerOnBackdrop(event,'treatment-drawer')">
+<!-- Drawers -->
+<div class="drawer-backdrop" id="treatment-backdrop">
   <aside class="drawer" id="treatment-drawer" role="dialog" aria-modal="true">
     <div class="drawer__header">
       <h3 class="section-heading">Edit Treatment</h3>
-      <button class="drawer__close" onclick="closeDrawer('treatment-drawer')"><svg class="icon" style="width:20px;height:20px;"><use href="#icon-chevron-down"/></svg></button>
+      <button onclick="closeDrawer('treatment-drawer')" aria-label="Close medical drawer"><svg class="icon" style="width:20px;height:20px;"><use href="#icon-chevron-down"/></svg></button>
     </div>
-    <label for="cause-select">Cause</label>
+    <label for="cause-select">Type of patient</label>
     <select id="cause-select">
-      <option>Inpatient: Injury</option>
-      <option selected>Inpatient: Illness</option>
-      <option>Outpatient: Injury</option>
-      <option>Outpatient: Illness</option>
+      <option selected>In-patient</option>
+      <option>Out-patient</option>
     </select>
-    <label for="incident-desc">Incident description</label>
-    <textarea id="incident-desc" rows="4">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</textarea>
     <label for="admission-date">Date of admission</label>
-    <input type="date" id="admission-date" value="2026-06-28">
+    <input type="text" id="admission-date" placeholder="dd.mm.yyyy" value="28.06.2026">
     <label for="discharge-date">Date of discharge</label>
-    <input type="date" id="discharge-date">
+    <input type="text" id="discharge-date" placeholder="dd.mm.yyyy">
+    <label for="incident-desc">Description of incident</label>
+    <textarea id="incident-desc" rows="4">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</textarea>
     <div class="drawer__actions">
-      <button class="drawer__cancel" onclick="closeDrawer('treatment-drawer')">Cancel</button>
+      <button class="drawer__cancel" onclick="closeDrawer('treatment-drawer')">Discard</button>
       <button class="drawer__save" onclick="closeDrawer('treatment-drawer')">Save</button>
     </div>
   </aside>
 </div>
 
-<!-- ============ Doctor drawer ============ -->
-<div class="drawer-backdrop" id="doctor-backdrop" onclick="closeDrawerOnBackdrop(event,'doctor-drawer')">
+<div class="drawer-backdrop" id="doctor-backdrop">
   <aside class="drawer" id="doctor-drawer" role="dialog" aria-modal="true">
     <div class="drawer__header">
-      <h3 class="section-heading">Add Doctors</h3>
-      <button class="drawer__close" onclick="closeDrawer('doctor-drawer')"><svg class="icon" style="width:20px;height:20px;"><use href="#icon-chevron-down"/></svg></button>
+      <h3 class="section-heading">Edit Doctors</h3>
+      <button onclick="closeDrawer('doctor-drawer')" aria-label="Close medical drawer"><svg class="icon" style="width:20px;height:20px;"><use href="#icon-chevron-down"/></svg></button>
     </div>
     <div id="doctor-entries">
       <div class="doctor-entry">
-        <label>Name &amp; Type</label>
-        <input type="text" placeholder="e.g. Jason Peterson - Cardiologist">
+        <label>Assign doctor *</label>
+        <input type="text" placeholder="Search doctors...">
         <label>Involvement in the case</label>
+        <span style="font-size:12px;color:var(--ds-color-ink-muted);">Describe this doctor's role in the case</span>
         <textarea rows="3" placeholder="Describe involvement..."></textarea>
       </div>
     </div>
-    <button class="add-doctor-btn" onclick="addDoctorEntry()">+ Add another doctor</button>
+    <button class="add-doctor-btn" onclick="addDoctorEntry()">+ Add another Contact Doctor</button>
     <div class="drawer__actions">
-      <button class="drawer__cancel" onclick="closeDrawer('doctor-drawer')">Cancel</button>
+      <button class="drawer__cancel" onclick="closeDrawer('doctor-drawer')">Discard</button>
       <button class="drawer__save" onclick="closeDrawer('doctor-drawer')">Save</button>
     </div>
   </aside>
 </div>
 
 <script>
-  function openDrawer(id) {
-    document.getElementById(id).parentElement.classList.add('open');
+  function setRole(role) {
+    document.body.setAttribute('data-role', role);
+    document.getElementById('role-ac-btn').classList.toggle('active', role === 'AC');
+    document.getElementById('role-cd-btn').classList.toggle('active', role === 'CD');
+    document.getElementById('screening-title').textContent = role === 'CD' ? 'Screening Questions (AC Only)' : 'Screening Questions';
   }
-  function closeDrawer(id) {
-    document.getElementById(id).parentElement.classList.remove('open');
-  }
-  function closeDrawerOnBackdrop(evt, id) {
-    if (evt.target === evt.currentTarget) closeDrawer(id);
-  }
-  document.querySelectorAll('.drawer-backdrop').forEach(function(backdrop){
-    backdrop.addEventListener('mousedown', function(e){
-      if (e.target === backdrop) backdrop.classList.remove('open');
-    });
+
+  function openDrawer(id) { document.getElementById(id).parentElement.classList.add('open'); }
+  function closeDrawer(id) { document.getElementById(id).parentElement.classList.remove('open'); }
+  document.querySelectorAll('.drawer-backdrop').forEach(function(b){
+    b.addEventListener('mousedown', function(e){ if (e.target === b) b.classList.remove('open'); });
   });
   document.addEventListener('keydown', function(e){
-    if (e.key === 'Escape') {
-      document.querySelectorAll('.drawer-backdrop.open').forEach(function(b){ b.classList.remove('open'); });
-    }
+    if (e.key === 'Escape') document.querySelectorAll('.drawer-backdrop.open').forEach(function(b){ b.classList.remove('open'); });
   });
 
   function toggleHistory() {
@@ -656,8 +643,23 @@
   }
 
   function updateClassification(select) {
-    var wrapper = document.getElementById('classification-wrapper');
-    wrapper.className = 'classification-select classification-select--' + select.value;
+    document.getElementById('classification-wrapper').className = 'classification-select classification-select--' + select.value;
+  }
+
+  function toggleRow(cell) {
+    var row = cell.closest('.assessment-table__row');
+    var existing = row.nextElementSibling;
+    cell.classList.toggle('open');
+    if (existing && existing.classList.contains('expanded-detail-row')) {
+      existing.remove();
+      return;
+    }
+    var detailRow = document.createElement('div');
+    detailRow.className = 'assessment-table__row expanded-detail-row';
+    detailRow.style.gridTemplateColumns = '1fr';
+    detailRow.style.height = 'auto';
+    detailRow.innerHTML = '<div class="expanded-detail" style="grid-column:1/-1; margin-left:357px; width:calc(100% - 357px - 160px);">' + row.dataset.detail + '</div>';
+    row.after(detailRow);
   }
 
   function editScreening(btn) {
@@ -668,37 +670,21 @@
     var row = item.querySelector('.screening-item__row');
     row.style.display = 'none';
     answerEl.style.display = 'none';
-
     var textarea = document.createElement('textarea');
-    textarea.rows = 4;
-    textarea.placeholder = 'Write here...';
-    textarea.value = currentAnswer;
+    textarea.rows = 5; textarea.placeholder = 'Write here...'; textarea.value = currentAnswer;
     item.appendChild(textarea);
-
     var actions = document.createElement('div');
     actions.className = 'screening-item__actions';
-    var saveBtn = document.createElement('button');
-    saveBtn.className = 'screening-btn';
-    saveBtn.textContent = 'Save';
-    var discardBtn = document.createElement('button');
-    discardBtn.className = 'screening-btn';
-    discardBtn.textContent = 'Discard';
-    actions.appendChild(saveBtn);
-    actions.appendChild(discardBtn);
+    var saveBtn = document.createElement('button'); saveBtn.className = 'screening-btn'; saveBtn.textContent = 'Save';
+    var discardBtn = document.createElement('button'); discardBtn.className = 'screening-btn'; discardBtn.textContent = 'Discard';
+    actions.appendChild(saveBtn); actions.appendChild(discardBtn);
     item.appendChild(actions);
-
     saveBtn.addEventListener('click', function(){
       answerEl.textContent = textarea.value.trim() || '-';
-      textarea.remove();
-      actions.remove();
-      row.style.display = '';
-      answerEl.style.display = '';
+      textarea.remove(); actions.remove(); row.style.display = ''; answerEl.style.display = '';
     });
     discardBtn.addEventListener('click', function(){
-      textarea.remove();
-      actions.remove();
-      row.style.display = '';
-      answerEl.style.display = '';
+      textarea.remove(); actions.remove(); row.style.display = ''; answerEl.style.display = '';
     });
   }
 
